@@ -3,110 +3,140 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fieldwork · 프로젝트 개요</title>
+<title>Fieldwork · 브랜드 가이드 검토</title>
 <style>
 *{box-sizing:border-box}
-:root{color-scheme:light;--ink:#22292e;--muted:#647078;--line:#e2e6e8;--accent:#345563}
-body{margin:0;background:#fff;color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-button{font:inherit;cursor:pointer;color:inherit}
+:root{color-scheme:light;--ink:#292c29;--muted:#767b75;--line:#dedfd9;--accent:#345563}
+body{margin:0;color:var(--ink);background:#fff;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo",sans-serif;-webkit-font-smoothing:antialiased}
+button,summary{font:inherit;cursor:pointer}button{color:inherit}
 button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.sidebar{position:fixed;inset:0 auto 0 0;width:204px;background:#f8f9f9;border-right:1px solid var(--line);padding:21px 14px;display:flex;flex-direction:column}
-.brand{padding:0 12px 30px;font-size:18px;font-weight:750;letter-spacing:-.7px;color:var(--accent)}
-.nav-list{display:flex;flex-direction:column;gap:3px}
-.nav-list span{display:flex;align-items:center;gap:11px;min-height:38px;padding:8px 12px;font-size:13px;color:var(--muted);border-radius:4px}
-.nav-list .active{background:#e9edef;color:var(--ink);font-weight:600}
-.nav-list svg{width:16px;height:16px;stroke:currentColor;stroke-width:1.5;fill:none}
-.workspace{margin-top:auto;padding:14px 12px 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
-main{margin-left:204px}
-.topbar{height:54px;border-bottom:1px solid var(--line);padding:0 32px;display:flex;align-items:center;font-size:12px;color:var(--muted)}
-.topbar .separator{margin:0 12px;color:#b4bcc1}
-.content{max-width:1260px;margin:0 auto;padding:32px 36px}
-h1{font-size:26px;line-height:1.35;letter-spacing:-.8px;margin:0;font-weight:650}
-.summary{display:flex;gap:48px;margin:25px 0 28px;padding:0 0 25px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
-.summary div{display:flex;align-items:baseline;gap:12px}
-.summary dt{font-size:13px;color:var(--muted)}
-.summary dd{margin:0;font-size:23px;font-weight:600;letter-spacing:-.6px}
-.review-row{display:flex;gap:24px;align-items:center;padding:17px 20px;border-left:3px solid var(--accent);background:#f4f6f7;margin-bottom:34px}
-.review-info{flex:1;min-width:0}
-.review-info h2{font-size:13px;color:var(--muted);font-weight:500;margin:0 0 5px}
-.review-info p{margin:0;font-size:14px;line-height:1.6}
-.review-info p strong{font-weight:600;margin-right:12px}
-.primary{background:var(--accent);color:white;border:1px solid var(--accent);border-radius:4px;min-height:36px;padding:7px 13px;font-size:12px;font-weight:600;white-space:nowrap}
-.list-heading{display:flex;align-items:baseline;gap:9px;padding-bottom:17px}
-.list-heading h2{font-size:16px;font-weight:600;margin:0;letter-spacing:-.3px}
-.list-heading span{font-size:12px;color:var(--muted)}
-table{width:100%;border-collapse:collapse;table-layout:fixed}
-col.name{width:43%}col.owner{width:18%}col.status{width:23%}col.date{width:16%}
-th{font-size:12px;font-weight:500;color:var(--muted);text-align:left;padding:11px 16px;background:#f8f9f9;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-td{height:62px;padding:16px;border-bottom:1px solid #edf0f1;font-size:13px;vertical-align:middle}
-td:first-child{font-weight:550;font-size:14px}
-td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
-.project-icon{display:inline-flex;vertical-align:middle;align-items:center;justify-content:center;width:25px;height:28px;margin-right:12px;border:1px solid #cbd3d7;border-radius:3px;color:#819099;background:#fff}
-.project-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.3}
-.status{display:inline-flex;align-items:center;gap:7px;font-size:12px;white-space:nowrap}
-.status::before{content:"";width:7px;height:7px;flex:none;border:1.5px solid #6b8591;border-radius:50%}
-.status.review::before{border-color:#a37d37;background:#a37d37}
-.mobile-brand{display:none}
-@media(max-width:800px){
- .sidebar{display:none}main{margin:0}.topbar{height:52px;padding:0 20px}.mobile-brand{display:inline;font-weight:700;color:var(--accent)}.desktop-brand{display:none}
- .content{padding:25px 20px}h1{font-size:24px}
- .summary{gap:0;justify-content:space-between;margin:21px 0 23px;padding-bottom:21px}
- .summary div{flex-direction:column;gap:5px}.summary dt{font-size:11px}.summary dd{font-size:22px}
- .review-row{gap:12px;align-items:flex-start;flex-direction:column;padding:14px 16px;margin-bottom:28px}
- .review-info p{font-size:13px}.review-info p strong{display:block;margin-right:0}.primary{min-height:38px}
- .list-heading{padding-bottom:13px}.list-heading h2{font-size:15px}
- table,tbody{display:block}thead,colgroup{display:none}tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding:16px 0;border-top:1px solid var(--line)}
- td{display:block;padding:0;border:0;height:auto;font-size:12px}
- td:first-child{grid-column:1;grid-row:1;font-size:14px;min-width:0;overflow-wrap:anywhere}
- td:nth-child(2){grid-column:1;grid-row:2;color:var(--muted);padding-left:0}
- td:nth-child(2)::before{content:"담당자 ";color:#7e898f}
- td:nth-child(3){grid-column:2;grid-row:1}
- td:nth-child(4){grid-column:2;grid-row:2;color:var(--muted)}
- td:nth-child(4)::before{content:"기한 ";color:#7e898f}
- .project-icon{display:none}.status{font-size:11px}
+.appbar{height:54px;display:flex;align-items:center;gap:32px;padding:0 24px;border-bottom:1px solid var(--line)}
+.brand{font-size:17px;font-weight:800;letter-spacing:-.7px}
+.app-location{border-left:1px solid var(--line);padding-left:24px;color:#5c635c;font-size:12px}
+.workspace{display:grid;grid-template-columns:304px minmax(0,1fr);min-height:calc(100vh - 54px)}
+.project-list{border-right:1px solid var(--line);background:#fafaf8;padding:26px 0;display:flex;flex-direction:column}
+.list-heading{display:flex;align-items:baseline;gap:8px;padding:0 24px 20px}
+.list-heading h1{font-size:14px;margin:0;font-weight:650}
+.list-heading span{font-size:11px;color:var(--muted)}
+.project{padding:19px 24px;border-top:1px solid #e7e9e3;position:relative}
+.project.selected{background:#e8edef}
+.project.selected::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent)}
+.project-top{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.project h2{font-size:14px;font-weight:600;margin:0}
+.status-mark{width:9px;height:9px;border:1.5px solid #819080;border-radius:50%;flex:none}
+.selected .status-mark{background:#9b762e;border-color:#9b762e}
+.project-meta{display:flex;gap:6px 12px;flex-wrap:wrap;font-size:11px;color:#6b7369;font-variant-numeric:tabular-nums;padding-left:17px}
+.project-meta .date{margin-left:auto}
+.project-task{font-size:12px;margin:12px 0 0 17px;color:#435440}
+.overview{margin:30px 24px 0;border-top:1px solid var(--line);padding-top:14px;font-size:11px;color:var(--muted)}
+.overview summary{list-style:none;display:flex;align-items:center;justify-content:space-between;min-height:30px}
+.overview summary::-webkit-details-marker{display:none}
+.overview summary::after{content:"+";font:16px ui-monospace,monospace}
+.overview[open] summary::after{content:"−"}
+.overview dl{margin:12px 0 0}.overview dl div{display:flex;justify-content:space-between;margin:7px 0}.overview dd{margin:0;color:var(--ink);font-variant-numeric:tabular-nums}
+.review{min-width:0;display:flex;flex-direction:column}
+.project-header{min-height:105px;padding:25px 32px 19px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line)}
+.project-header h2{font-size:21px;font-weight:650;letter-spacing:-.6px;margin:0 0 7px}
+.project-info{display:flex;gap:16px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.project-info b{color:#4a504a;font-weight:500;margin-left:5px}
+.review-state{color:#856527;font-size:12px;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.review-state::before{content:"";height:7px;width:7px;border-radius:50%;background:#a17c37}
+.review-body{display:grid;grid-template-columns:minmax(0,1fr) 224px;flex:1;min-height:0}
+.document{background:#edeeeb;min-width:0;display:flex;flex-direction:column}
+.document-bar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid #dde0d8;font-size:12px}
+.document-bar span:last-child{color:#7b8378;font-size:11px}
+.canvas{flex:1;display:grid;place-items:center;padding:38px 36px 44px}
+.cover{width:min(100%,432px);aspect-ratio:3/4;margin:0;background:#fbf9f1;color:#24382f;border:1px solid #d9dbd1;box-shadow:0 2px 3px #2632220a;display:flex;flex-direction:column;padding:30px 32px;position:relative;overflow:hidden}
+.cover-top{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.03em;border-top:2px solid #24382f;padding-top:10px}
+.cover-title{font-size:clamp(32px,4.4vw,62px);font-weight:600;line-height:1.12;letter-spacing:-3px;margin:42px 0 0}
+.cover-art{width:100%;flex:1;min-height:100px;margin:28px 0 22px}
+.cover-footer{font-size:10px;display:flex;justify-content:space-between;border-top:1px solid #a4afa1;padding-top:11px}
+.review-notes{border-left:1px solid var(--line);padding:24px 20px}
+.review-notes h3{font-size:12px;margin:0 0 22px;font-weight:600}
+.note-label{font-size:11px;color:var(--muted);margin-bottom:8px}
+.note{font-size:13px;line-height:1.85;margin:0}
+.action-details{margin-top:26px;font-size:12px}
+.action-details summary{display:flex;align-items:center;justify-content:center;min-height:38px;border:1px solid #a6aea2;border-radius:3px;background:#fff;font-weight:600;list-style:none}
+.action-details summary::-webkit-details-marker{display:none}
+.action-details[open] summary{background:#edf0e9}
+.action-copy{font-size:12px;color:#60695d;line-height:1.8;margin:14px 0 0}
+.memo-label{display:block;font-size:11px;margin:16px 0 7px;color:var(--muted)}
+.memo{display:block;width:100%;min-height:126px;resize:vertical;border:1px solid #cbd0c7;border-radius:3px;padding:9px;font-family:inherit;font-size:12px;line-height:1.7;background:#fff;color:var(--ink)}
+@media(min-width:1600px){.canvas{padding:48px}.cover{width:470px}}
+@media(max-width:1100px) and (min-width:761px){.workspace{grid-template-columns:250px minmax(0,1fr)}.review-body{grid-template-columns:minmax(0,1fr)}.review-notes{border-left:0;border-top:1px solid var(--line);display:flex;align-items:center;gap:24px;padding:16px 24px}.review-notes h3,.note-label{display:none}.action-details{margin:0 0 0 auto}.action-details summary{padding:0 20px}.canvas{padding:30px}.cover{width:370px}.cover-title{font-size:48px}}
+@media(max-width:760px){
+ .appbar{height:48px;padding:0 18px;gap:20px}.brand{font-size:16px}.app-location{padding-left:18px}
+ .workspace{display:block;min-height:calc(100vh - 48px)}.project-list{padding:21px 0 0;border-right:0;border-bottom:1px solid var(--line)}
+ .list-heading{padding:0 18px 14px}.project{padding:13px 18px}.project-top{margin-bottom:5px}.project h2{font-size:13px}.project-meta{font-size:11px}.project-task{display:none}
+ .overview{margin:0 18px;padding:8px 0;border-top:1px solid var(--line)}.overview dl{margin-bottom:14px}
+ .project-header{padding:21px 18px;min-height:96px;gap:12px}.project-header h2{font-size:19px}.project-info{font-size:11px;gap:12px}.review-state{font-size:11px;gap:5px}
+ .review-body{display:flex;flex-direction:column}.document-bar{height:43px;padding:0 18px}.canvas{padding:25px 24px}.cover{width:min(100%,300px);padding:22px}.cover-title{font-size:42px;margin-top:30px;letter-spacing:-2px}.cover-top,.cover-footer{font-size:8px}.cover-art{margin:20px 0 18px}
+ .review-notes{padding:20px 18px 28px;border-left:0;border-top:1px solid var(--line)}.review-notes h3{margin-bottom:14px}.note-label{display:none}.action-details{margin-top:16px}.action-details summary{min-height:44px}
 }
 </style>
 </head>
-<body data-review-label="프로젝트 개요 전체">
-<aside class="sidebar" data-review-key="sidebar">
-  <div class="brand" data-review-key="brand">fieldwork</div>
-  <nav class="nav-list" aria-label="업무 메뉴" data-review-key="navigation">
-    <span class="active" aria-current="page" data-review-key="nav-overview"><svg viewBox="0 0 20 20" aria-hidden="true" data-review-ignore><path d="M3 3h5v5H3zM12 3h5v5h-5zM3 12h5v5H3zM12 12h5v5h-5z"/></svg>프로젝트 개요</span>
-    <span data-review-key="nav-projects"><svg viewBox="0 0 20 20" aria-hidden="true" data-review-ignore><path d="M2.5 5h6l2-2h7v14h-15z"/></svg>프로젝트</span>
-    <span data-review-key="nav-inbox"><svg viewBox="0 0 20 20" aria-hidden="true" data-review-ignore><path d="M3 3h14v14H3zM3 11h4l1 3h4l1-3h4"/></svg>받은 편지함</span>
-    <span data-review-key="nav-team"><svg viewBox="0 0 20 20" aria-hidden="true" data-review-ignore><circle cx="8" cy="6" r="3"/><path d="M2 17v-2a6 6 0 0 1 12 0v2M14 3a3 3 0 0 1 0 6M15 12a4 4 0 0 1 3 4v1"/></svg>팀 멤버</span>
-  </nav>
-  <div class="workspace" data-review-key="workspace">샘플 워크스페이스</div>
-</aside>
-<main data-review-key="main">
-  <header class="topbar" data-review-key="topbar"><span class="desktop-brand" data-review-key="workspace-name">워크스페이스</span><span class="mobile-brand" data-review-key="mobile-brand">fieldwork</span><span class="separator" aria-hidden="true">/</span><span data-review-key="breadcrumb">프로젝트 개요</span></header>
-  <div class="content" data-review-key="content">
-    <h1 data-review-key="title">프로젝트 개요</h1>
-    <dl class="summary" data-review-key="metrics">
-      <div data-review-key="metric-active"><dt data-review-key="active-title">진행 중 프로젝트</dt><dd data-review-key="active-value">12</dd></div>
-      <div data-review-key="metric-review"><dt data-review-key="review-title">검토 대기</dt><dd data-review-key="review-value">4</dd></div>
-      <div data-review-key="metric-done"><dt data-review-key="done-title">이번 주 완료</dt><dd data-review-key="done-value">8</dd></div>
-    </dl>
-    <section class="review-row" data-review-key="notice" aria-labelledby="review-heading">
-      <div class="review-info" data-review-key="notice-content">
-        <h2 id="review-heading" data-review-key="notice-title">오늘 확인할 일</h2>
-        <p data-review-key="notice-copy"><strong>브랜드 가이드</strong>표지 시안을 검토해 주세요.</p>
-      </div>
-      <button class="primary" data-review-key="review-button">표지 시안 검토</button>
-    </section>
-    <section data-review-key="project-panel">
-      <div class="list-heading" data-review-key="list-heading"><h2 data-review-key="list-title">최근 프로젝트</h2><span data-review-key="list-count">3개</span></div>
-      <table data-review-key="projects" aria-label="최근 프로젝트 목록">
-        <colgroup><col class="name"><col class="owner"><col class="status"><col class="date"></colgroup>
-        <thead data-review-key="table-head"><tr><th scope="col">프로젝트</th><th scope="col">담당자</th><th scope="col">상태</th><th scope="col">기한</th></tr></thead>
-        <tbody>
-          <tr data-review-key="row-brand"><td data-review-key="brand-name"><span class="project-icon" aria-hidden="true"><svg viewBox="0 0 16 16" data-review-ignore><path d="M4 2h6l2 2v10H4zM6 7h4M6 10h4"/></svg></span>브랜드 가이드</td><td data-review-key="brand-owner">김민서</td><td data-review-key="brand-status"><span class="status review">검토 대기</span></td><td data-review-key="brand-date">10.08</td></tr>
-          <tr data-review-key="row-web"><td data-review-key="web-name"><span class="project-icon" aria-hidden="true"><svg viewBox="0 0 16 16" data-review-ignore><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 6h12"/></svg></span>웹사이트 개편</td><td data-review-key="web-owner">이도윤</td><td data-review-key="web-status"><span class="status">진행 중</span></td><td data-review-key="web-date">10.12</td></tr>
-          <tr data-review-key="row-product"><td data-review-key="product-name"><span class="project-icon" aria-hidden="true"><svg viewBox="0 0 16 16" data-review-ignore><path d="M4 2h6l2 2v10H4zM6 7h4M6 10h4"/></svg></span>제품 소개서</td><td data-review-key="product-owner">박지우</td><td data-review-key="product-status"><span class="status">진행 중</span></td><td data-review-key="product-date">10.14</td></tr>
-        </tbody>
-      </table>
-    </section>
+<body data-review-label="프로젝트 목록과 표지 검토">
+<header class="appbar" data-review-key="appbar">
+ <div class="brand" data-review-key="brand">fieldwork</div>
+ <span class="app-location" data-review-key="app-location">프로젝트</span>
+</header>
+<div class="workspace" data-review-key="workspace">
+ <aside class="project-list" data-review-key="project-list" aria-label="최근 프로젝트">
+  <div class="list-heading" data-review-key="list-heading"><h1 data-review-key="list-title">최근 프로젝트</h1><span data-review-key="list-count">3</span></div>
+  <article class="project selected" data-review-key="row-brand" aria-label="브랜드 가이드, 선택됨">
+   <div class="project-top" data-review-key="brand-heading"><span class="status-mark" aria-hidden="true"></span><h2 data-review-key="brand-name">브랜드 가이드</h2></div>
+   <div class="project-meta" data-review-key="brand-meta"><span data-review-key="brand-status">검토 대기</span><span data-review-key="brand-owner">김민서</span><span class="date" data-review-key="brand-date">10.08</span></div>
+   <p class="project-task" data-review-key="brand-task">표지 시안 검토</p>
+  </article>
+  <article class="project" data-review-key="row-web">
+   <div class="project-top" data-review-key="web-heading"><span class="status-mark" aria-hidden="true"></span><h2 data-review-key="web-name">웹사이트 개편</h2></div>
+   <div class="project-meta" data-review-key="web-meta"><span data-review-key="web-status">진행 중</span><span data-review-key="web-owner">이도윤</span><span class="date" data-review-key="web-date">10.12</span></div>
+  </article>
+  <article class="project" data-review-key="row-product">
+   <div class="project-top" data-review-key="product-heading"><span class="status-mark" aria-hidden="true"></span><h2 data-review-key="product-name">제품 소개서</h2></div>
+   <div class="project-meta" data-review-key="product-meta"><span data-review-key="product-status">진행 중</span><span data-review-key="product-owner">박지우</span><span class="date" data-review-key="product-date">10.14</span></div>
+  </article>
+  <details class="overview" data-review-key="overview">
+   <summary data-review-key="overview-toggle">전체 현황</summary>
+   <dl data-review-key="metrics">
+    <div data-review-key="metric-active"><dt>진행 중 프로젝트</dt><dd>12</dd></div>
+    <div data-review-key="metric-review"><dt>검토 대기</dt><dd>4</dd></div>
+    <div data-review-key="metric-done"><dt>이번 주 완료</dt><dd>8</dd></div>
+   </dl>
+  </details>
+ </aside>
+ <main class="review" data-review-key="main">
+  <header class="project-header" data-review-key="project-header">
+   <div data-review-key="project-identity"><h2 data-review-key="title">브랜드 가이드</h2><div class="project-info" data-review-key="project-info"><span data-review-key="selected-owner">담당자<b>김민서</b></span><span data-review-key="selected-date">기한<b>10.08</b></span></div></div>
+   <span class="review-state" data-review-key="selected-status">검토 대기</span>
+  </header>
+  <div class="review-body" data-review-key="review-body">
+   <section class="document" data-review-key="document" aria-label="표지 시안 미리보기">
+    <div class="document-bar" data-review-key="document-bar"><span data-review-key="document-title">표지 시안</span><span data-review-key="document-disclosure">예시 표지</span></div>
+    <div class="canvas" data-review-key="canvas">
+     <figure class="cover" data-review-key="cover" aria-label="브랜드 가이드 예시 표지">
+      <div class="cover-top" data-review-key="cover-top"><span>FIELDWORK</span><span>브랜드 가이드</span></div>
+      <div class="cover-title" data-review-key="cover-title">브랜드<br>가이드</div>
+      <svg class="cover-art" viewBox="0 0 320 190" aria-hidden="true" data-review-ignore>
+       <path fill="#345563" d="M0 0h72v190H0zM82 0h238v46H82zM82 58h178v46H82z"/>
+       <path fill="#bcc8cc" d="M82 116h178v74H82zM272 58h48v132h-48z"/>
+      </svg>
+      <div class="cover-footer" data-review-key="cover-footer"><span>IDENTITY / APPLICATION</span><span>FIELDWORK</span></div>
+     </figure>
+    </div>
+   </section>
+   <aside class="review-notes" data-review-key="review-notes" aria-label="검토 요청">
+    <h3 data-review-key="notice-title">검토 요청</h3>
+    <div class="note-label" data-review-key="notice-project">브랜드 가이드</div>
+    <p class="note" data-review-key="notice-copy">표지 시안을<br>검토해 주세요.</p>
+    <details class="action-details" data-review-key="review-action">
+     <summary data-review-key="review-button">검토 메모 작성</summary>
+     <label class="memo-label" for="review-memo" data-review-key="memo-label">표지에 대한 의견</label>
+     <textarea class="memo" id="review-memo" data-review-key="review-memo"></textarea>
+    </details>
+   </aside>
   </div>
-</main>
+ </main>
+</div>
 </body>
 </html>

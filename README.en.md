@@ -14,7 +14,7 @@ A Codex skill for mobile and desktop mockups with element selection, removal, re
 
 </div>
 
-![Revised project overview with review action and project rows](docs/images/desktop-after.png)
+![Fieldwork project list, selected cover, and review request](docs/images/desktop-after.png)
 
 <details>
 <summary>Before/after reviewer and mobile example</summary>
@@ -46,7 +46,7 @@ The deliverable is one self-contained HTML file. Open it in a browser, compare s
 - Bundled examples as tool demonstrations, not starting templates for every product
 - [Design criteria](references/product-design.md) · [Demo decisions and references](docs/design-notes.md)
 
-The revised reading example puts the current page and continue action next to a small cover. The work dashboard places the review action above aligned project rows. Both retain the original Before data and captures.
+The reading example puts the current page and continue action next to a small cover. Fieldwork opens a cover review beside the project list, with the request and a local note field alongside the document. Its cover is an authored placeholder. Both retain the original Before captures and project data.
 
 ## Why use it?
 

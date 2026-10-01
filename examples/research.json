@@ -4,12 +4,24 @@
     "author": "Design Studio UI UX",
     "url": "https://dribbble.com/shots/20467460-Library-Mobile-App-Design-Bookish",
     "observedAt": "2026-10-01",
-    "metrics": {"likes": null, "views": null},
+    "metrics": {
+      "likes": null,
+      "views": null
+    },
     "imageInspected": true,
     "limitations": "Public reaction counts unavailable; no popularity rank claimed. Fictional demo only.",
-    "principles": ["Group a small book cover with its title and reading metadata"],
-    "rejected": ["Pricing panels", "Gradients", "Tilted presentation mockups"],
-    "appliedTo": ["library-default-mobile", "library-confirm-mobile"]
+    "principles": [
+      "Group a small book cover with its title and reading metadata"
+    ],
+    "rejected": [
+      "Pricing panels",
+      "Gradients",
+      "Tilted presentation mockups"
+    ],
+    "appliedTo": [
+      "library-default-mobile",
+      "library-confirm-mobile"
+    ]
   },
   {
     "title": "Projects · Linear Docs",
@@ -19,8 +31,36 @@
     "kind": "product-documentation",
     "imageInspected": true,
     "limitations": "Documentation and overview image, not an interactive audit of the product.",
-    "principles": ["Keep status, owner, and target date together for project decisions"],
-    "rejected": ["Copying the product's dark theme, brand, and icons"],
-    "appliedTo": ["operations-default-desktop", "operations-default-mobile"]
+    "principles": [
+      "Keep status, owner, and target date together for project decisions"
+    ],
+    "rejected": [
+      "Copying the product's dark theme, brand, and icons"
+    ],
+    "appliedTo": [
+      "operations-default-desktop",
+      "operations-default-mobile"
+    ]
+  },
+  {
+    "title": "Documents · Linear Docs",
+    "author": "Linear",
+    "url": "https://linear.app/docs/documents",
+    "observedAt": "2026-10-01",
+    "kind": "product-documentation",
+    "imageInspected": true,
+    "limitations": "Product document screenshot inspected; no interactive audit or popularity claim.",
+    "principles": [
+      "Keep the work document in context with its project and review request"
+    ],
+    "rejected": [
+      "Dark theme",
+      "Marketing backdrop",
+      "Copying reference text or graphic assets"
+    ],
+    "appliedTo": [
+      "operations-default-desktop",
+      "operations-default-mobile"
+    ]
   }
 ]
