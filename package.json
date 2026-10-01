@@ -2,8 +2,11 @@
   "name": "uib-a",
   "version": "1.0.0",
   "private": true,
-  "license": "UNLICENSED",
-  "files": ["SKILL.md", "README.md", "agents", "references", "scripts", "assets", "examples", "package-lock.json"],
+  "license": "MIT",
+  "repository": {"type": "git", "url": "https://github.com/99duuk/uib-a.git"},
+  "homepage": "https://github.com/99duuk/uib-a#readme",
+  "bugs": {"url": "https://github.com/99duuk/uib-a/issues"},
+  "files": ["SKILL.md", "README.md", "README.en.md", "LICENSE", "docs", "agents", "references", "scripts", "assets", "examples", "package-lock.json"],
   "type": "module",
   "description": "Portable UI before/after review skill and offline HTML reviewer",
   "engines": {

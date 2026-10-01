@@ -24,5 +24,5 @@ for(const name of [...new Set(files)].sort()){
 }
 chunks.push(Buffer.alloc(1024));const archive=gzipSync(Buffer.concat(chunks));
 await fs.writeFile(path.join(dest,filename),archive,{flag:'wx'});
-await writeJSON(path.join(dest,'package-report.json'),{name:pkg.name,version:pkg.version,filename,sha256:hash(archive),files:[...new Set(files)].sort(),note:'Local archive only; nothing published. License selection pending owner decision.'});
+await writeJSON(path.join(dest,'package-report.json'),{name:pkg.name,version:pkg.version,license:pkg.license,filename,sha256:hash(archive),files:[...new Set(files)].sort(),note:'Local archive only; this command does not publish.'});
 console.log(path.join(dest,filename));
