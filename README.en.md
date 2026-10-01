@@ -113,5 +113,3 @@ Initial verification covered 41 review checks plus 20 input/data checks on macOS
 [Open an issue](https://github.com/99duuk/uib-a/issues) with your browser, OS, reproduction steps, and expected behavior. Share only minimal, anonymized examples. Pull requests should explain the change and the behavior checked.
 
 [MIT License](LICENSE) · Copyright © 2026 99duuk. Dependencies and third-party design assets retain their respective licenses. Community project; not an official OpenAI or Dribbble product.
-
-If this helps your design reviews, a ⭐ makes it easier to find for your next project.
