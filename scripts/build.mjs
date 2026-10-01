@@ -106,7 +106,7 @@ export async function build(manifestFile,outDir) {
     }
     entry.before.hash=hash(JSON.stringify(entry.before));entries.push(entry);
   }
-  const bundle={schemaVersion:1,generator:'uib-a',generatorVersion:'1.0.0',reviewId:input.reviewId||input.project.key,project:input.project,viewports:input.viewports,brand:input.brand||{},research:input.research||[],coverage:input.coverage||{},entries,elements,assets,indexHash:hash(JSON.stringify(elements))};
+  const bundle={schemaVersion:1,generator:'uib-a',generatorVersion:'1.1.0',reviewId:input.reviewId||input.project.key,project:input.project,viewports:input.viewports,brand:input.brand||{},research:input.research||[],coverage:input.coverage||{},entries,elements,assets,indexHash:hash(JSON.stringify(elements))};
   validateBundle(bundle);
   if(input.previousBundle) {
     const previous=validateBundle(await readJSON(path.resolve(base,input.previousBundle)));

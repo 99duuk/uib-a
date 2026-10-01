@@ -79,6 +79,8 @@ export async function prepare({page, context, target}) {
 
 ## After 작성
 
+레이아웃 작성 전 [After 설계 기준](product-design.md) 적용. 각 구역의 사용자 과제·정보 근거·변경 이유를 작업 메모에 기록. `examples/`의 레이아웃과 색은 별도 가상 프로젝트의 예시이며 다른 제품의 시작 템플릿으로 사용하지 않음.
+
 완전한 HTML 문서와 반응형 CSS로 작성합니다. 실제 앱 스크립트·iframe은 제거되며 정적 디자인과 아래 선언적 전이만 지원합니다. 이미지·CSS·폰트 경로는 해당 파일 기준의 로컬 상대 경로로 작성합니다. HTTP 자산은 먼저 사용 권한을 확인해 로컬에 준비합니다. CSS @import는 펼쳐 넣습니다. 동영상·실행 가능한 SVG·srcset은 지원하지 않습니다.
 
 ```html

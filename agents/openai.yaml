@@ -1,4 +1,4 @@
 interface:
   display_name: "uib-a · UI Before / After"
-  short_description: "브랜드에 맞는 PC·모바일 시안과 요소 선택·삭제·저장 비교 HTML 제작"
-  default_prompt: "Use $uib-a to research relevant Dribbble layouts and create brand-aligned mobile and desktop before/after mockups in one offline review HTML."
+  short_description: "기존 화면의 정보·동작을 기준으로 PC·모바일 시안 비교·수정"
+  default_prompt: "Use $uib-a to capture the current screens, identify the user's next action and the information it needs, and create mobile and desktop before/after proposals; explain each layout change using the product's actual content."

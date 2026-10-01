@@ -2,10 +2,10 @@
 
 # uib-a
 
-### 바꾸기 전에, 나란히 보고 결정
+### 기존 화면과 수정안을 한 HTML에서 비교
 
 **현재 UI와 개선 시안을 하나의 HTML로**<br>
-모바일부터 PC까지, 요소 선택·삭제·복원·저장까지 지원하는 Codex 스킬
+모바일·PC 시안 작성, 요소 선택·삭제·복원·저장용 Codex 스킬
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-3e6450.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-22%2B-294b3e.svg)](package.json)
@@ -25,8 +25,9 @@
 `uib-a` = **UI Before / After**
 
 - 프로젝트의 실제 화면·브랜드 파악
-- Dribbble에서 확인한 레이아웃·여백·정보 위계 추출
-- 서비스 브랜드·문구·밀도에 맞춘 After 재구성
+- 사용자의 다음 행동과 필요한 정보 확인
+- Dribbble·실제 제품 화면에서 해당 과제에 맞는 배치 참고
+- 기존 서비스의 데이터·용어·색을 기준으로 After 작성
 - Before와 After를 함께 담은 독립 HTML 생성
 - 선택 요소의 수정 요청 복사
 - 요소 임시 삭제·복원·저장
@@ -44,7 +45,7 @@
 
 ## 사용 목적
 
-“좀 더 예쁘게”라는 요청을 비교·판단 가능한 시안으로 전환
+구현 전 배치·문구·동작 위치를 비교하기 위한 시안 제작
 
 | 필요한 순간 | uib-a 활용 |
 | --- | --- |
@@ -58,16 +59,34 @@
 기본 산출물 = 디자인 시안<br>
 제품 코드 반영 = 검토 후 별도 요청
 
+### After 작성 기준
+
+- 큰 카드·KPI 묶음·히어로를 기본 배치로 사용하지 않음
+- 사용자 행동·정보 관계로 각 구역의 배치 이유 설명
+- 장식용 영문·추상적인 안내·임의 아이콘·가짜 수치 제거
+- 기존 브랜드에 필요한 색·이미지·서체는 근거를 확인해 유지
+- 예시의 색과 레이아웃을 다른 프로젝트에 그대로 적용하지 않음
+- [상세 설계 기준](references/product-design.md)
+
 <a id="preview"></a>
 
 ## 미리 보기
 
 ### PC · 업무 대시보드
 
+![수정된 PC 프로젝트 개요: 검토 동작과 프로젝트 목록](docs/images/desktop-after.png)
+
+<details>
+<summary><strong>PC · Before/After 비교 도구</strong></summary>
+
 ![PC 업무 화면의 Before/After와 하단 요소 검토 도구](docs/images/desktop-review.png)
+
+</details>
 
 <details>
 <summary><strong>모바일 · 독서 앱 시안</strong></summary>
+
+<img src="docs/images/mobile-after.png" width="390" alt="수정된 모바일 서재: 읽은 위치와 이어서 읽기">
 
 ![모바일 서재 화면의 Before/After](docs/images/mobile-review.png)
 
@@ -80,6 +99,15 @@
 - 모바일 서재·읽기 확인 모달·PC 프로젝트 홈·모바일 프로젝트 홈 포함
 - 가상 브랜드 기반 기능 예시
 - Dribbble 순위·전환 성과 사례 아님
+- Before 이미지·데이터 유지, After 구성만 개정
+
+| 예시 | 수정 내용 |
+| --- | --- |
+| 모바일 서재 | 표지 확대 영역 축소, 제목·읽은 위치·이어서 읽기 연결 |
+| PC 프로젝트 개요 | 카드형 통계 축소, 검토 동작과 프로젝트 목록 연결 |
+| 모바일 프로젝트 개요 | 담당자·상태·기한을 유지한 행 목록 |
+
+[예시의 변경 이유·참고 자료](docs/design-notes.md)
 
 <a id="quick-start"></a>
 
@@ -114,10 +142,11 @@ npm run install:skill -- /absolute/path/uib-a
 새 Codex 대화에서 아래 프롬프트 사용
 
 ```text
-$uib-a 이 프로젝트의 고객 시작 화면과 PC 관리자 홈을 개선해줘.
-Dribbble에서 반응과 적합도를 확인하고 우리 브랜드 톤으로 재구성해.
-현재 화면과 개선 화면을 하나의 HTML에서 비교하게 만들어줘.
-제품 코드는 수정하지 말고 결과 HTML의 정확한 절대경로를 알려줘.
+$uib-a 고객 시작 화면과 PC 관리자 홈을 다시 봐줘.
+실제 화면을 먼저 보고, 사용자가 해야 할 일과 찾기 어려운 정보를 짚어줘.
+기존 데이터와 브랜드를 유지하면서 그 문제를 해결하는 시안을 만들어줘.
+각 배치의 이유를 설명하고 Before/After를 한 HTML로 비교하게 해줘.
+제품 코드는 수정하지 말고 HTML의 절대경로를 알려줘.
 ```
 
 - 프로젝트 구조·화면 범위 확인
@@ -169,16 +198,18 @@ Dribbble에서 반응과 적합도를 확인하고 우리 브랜드 톤으로 �
 ### 모바일·PC 시안
 
 ```text
-$uib-a 고객 홈은 모바일 390px, 관리자 홈은 PC 1440px로 시안 만들어줘.
-기존 기능과 필수 문구는 유지하고, 여백과 정보 위계를 개선해줘.
-Before/After를 한 HTML로 만들고 요소 선택·삭제·저장까지 가능하게 해줘.
+$uib-a 모바일 390px에서는 현재 상태와 다음 행동이 먼저 보이게 해줘.
+관리자 PC 1440px에서는 처리할 항목과 담당자·기한을 비교하기 쉽게 해줘.
+원본에 있는 정보만 사용하고, 바꾸는 이유가 없는 장식은 추가하지 마.
+두 화면을 Before/After HTML로 만들어줘.
 ```
 
 ### 구현 전 명세
 
 ```text
-$uib-a 바로 만들지 말고 대상 화면, 참고 디자인 방향,
-브랜드 적용 기준과 비포애프터 검토 범위부터 명세해줘.
+$uib-a 먼저 현재 화면에서 사용자가 막히는 지점을 찾아줘.
+유지할 정보와 바꿀 배치, 그 이유를 짧게 정리해줘.
+아직 시안이나 제품 코드는 만들지 마.
 ```
 
 ### 화면 추가
@@ -227,6 +258,9 @@ npm run demo
 
 열 파일: `output/demo/before-after.html`
 
+- 기본 데모: 포함된 Before 캡처 재사용, After 소스로 재생성
+- 실제 프로젝트: 해당 화면의 별도 캡처 필요
+
 기존 출력 보존용 새 경로
 
 ```sh
@@ -242,6 +276,7 @@ Linux 브라우저 시스템 의존성: [Playwright 설치 안내](https://playw
 | 내용 | 문서 |
 | --- | --- |
 | 스킬 작업 흐름 | [SKILL.md](SKILL.md) |
+| After 배치·문구·시각 검토 | [설계 기준](references/product-design.md) |
 | Dribbble 조사·브랜드 적용 | [작업 흐름](references/workflow.md) |
 | 캡처·After HTML·manifest | [작성 가이드](references/authoring.md) |
 | 선택 ID·삭제·저장 규칙 | [검토 동작 계약](references/review-contract.md) |

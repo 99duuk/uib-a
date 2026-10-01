@@ -2,7 +2,7 @@
 
 # uib-a
 
-### Compare before you commit to a redesign.
+### Current screens and proposed changes in one HTML
 
 **Your current UI and proposed redesign, in one offline HTML file.**<br>
 A Codex skill for mobile and desktop mockups with element selection, removal, restoration, and saved reviews.
@@ -14,13 +14,39 @@ A Codex skill for mobile and desktop mockups with element selection, removal, re
 
 </div>
 
+![Revised project overview with review action and project rows](docs/images/desktop-after.png)
+
+<details>
+<summary>Before/after reviewer and mobile example</summary>
+
 ![Desktop before/after review](docs/images/desktop-review.png)
+
+<img src="docs/images/mobile-after.png" width="390" alt="Reading position and continue action in the revised mobile library">
+
+</details>
 
 ## What is it?
 
-**uib-a = UI Before / After.** It guides Codex through understanding your project, researching relevant Dribbble references, capturing the current UI, and creating a redesign that fits your brand.
+**uib-a = UI Before / After**
+
+- Capture the current screens and inspect their content
+- Identify the user's next action and the information it requires
+- Study relevant Dribbble references and real product interactions
+- Propose changes using the product's existing data, terms, and identity
 
 The deliverable is one self-contained HTML file. Open it in a browser, compare screens, select exact elements, try removing them, restore them, and save the review for another iteration. The default deliverable is a design proposal; production changes are a separate request.
+
+## How the After is designed
+
+- A task and content brief before layout work
+- A reason for each group, container, image, and action placement
+- No default hero, three KPI cards, rounded tile grid, and promotional sidebar
+- Product language instead of decorative English headings, vague slogans, and invented metrics
+- Brand-specific color and imagery where supported by the project
+- Bundled examples as tool demonstrations, not starting templates for every product
+- [Design criteria](references/product-design.md) · [Demo decisions and references](docs/design-notes.md)
+
+The revised reading example puts the current page and continue action next to a small cover. The work dashboard places the review action above aligned project rows. Both retain the original Before data and captures.
 
 ## Why use it?
 
@@ -44,10 +70,11 @@ npm run install:skill
 Installs to `$CODEX_HOME/skills/uib-a`, or `~/.codex/skills/uib-a` when unset. Existing installations are preserved. Open a new Codex conversation in your project:
 
 ```text
-$uib-a Create mobile and desktop before/after mockups for this project.
-Research relevant Dribbble layouts and adapt them to our brand.
-Capture the current screens and package the comparison in one HTML.
-Keep production code unchanged and give me the absolute HTML path.
+$uib-a Inspect the customer start screen and desktop admin home.
+Identify what the user needs to do and what is hard to find.
+Keep the existing data and brand, and propose a layout that addresses those problems.
+Explain the placement decisions and put Before/After in one HTML.
+Keep production code unchanged and give me the absolute file path.
 ```
 
 If the capture browser is missing, the skill guides its installation. To run the fictional demo directly from the cloned repository:
@@ -62,6 +89,8 @@ npm run demo
 Open **`output/demo/before-after.html`**. In PowerShell, set `$env:PLAYWRIGHT_SKIP_BROWSER_GC='1'` before running `npx playwright install chromium`. See [Playwright's browser guide](https://playwright.dev/docs/browsers) for Linux dependencies.
 
 Or [download the ready-made demo HTML](https://raw.githubusercontent.com/99duuk/uib-a/main/docs/demo/before-after.html), save it, and open it locally. It uses fictional reading and work dashboard examples, not customer screenshots or claimed Dribbble rankings.
+
+The demo rebuild reuses its bundled Before captures and generates After from the example source. Your project requires its own screen captures.
 
 ## Review controls
 
@@ -94,6 +123,7 @@ Keep untouched screens unchanged and increment the revised screen's version.
 ## Documentation
 
 - [Skill instructions](SKILL.md)
+- [After layout, copy, and visual review](references/product-design.md)
 - [Authoring, capture adapters, and rebuilding](references/authoring.md)
 - [Research and brand workflow](references/workflow.md)
 - [Selection, identity, deletion, and persistence](references/review-contract.md)
