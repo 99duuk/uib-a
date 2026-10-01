@@ -1,0 +1,23 @@
+{
+  "name": "uib-a",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "files": ["SKILL.md", "README.md", "agents", "references", "scripts", "assets", "examples", "package-lock.json"],
+  "type": "module",
+  "description": "Portable UI before/after review skill and offline HTML reviewer",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "demo": "node scripts/demo.mjs",
+    "verify:demo": "node scripts/verify.mjs output/demo/before-after.html",
+    "install:skill": "node scripts/install.mjs",
+    "package": "node scripts/package.mjs"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "linkedom": "0.18.13",
+    "playwright": "1.63.0"
+  }
+}
