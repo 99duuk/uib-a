@@ -46,7 +46,7 @@ The deliverable is one self-contained HTML file. Open it in a browser, compare s
 - Bundled examples as tool demonstrations, not starting templates for every product
 - [Design criteria](references/product-design.md) · [Demo decisions and references](docs/design-notes.md)
 
-The reading example puts the current page and continue action next to a small cover. Fieldwork opens a cover review beside the project list, with the request and a local note field alongside the document. Its cover is an authored placeholder. Both retain the original Before captures and project data.
+The reading example puts the current page and continue action next to a small cover. Fieldwork uses the same project-home specification and fixture on both sides: the Before is a typical generated dashboard, while the After aligns the same six projects, fields, filters, progress, status, due dates, and review memo around one reading order.
 
 ## Why use it?
 

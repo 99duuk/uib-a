@@ -99,7 +99,7 @@
 - 모바일 서재·읽기 확인 모달·PC 프로젝트 홈·모바일 프로젝트 홈 포함
 - 가상 브랜드 기반 기능 예시
 - Dribbble 순위·전환 성과 사례 아님
-- Before 이미지·데이터 유지, After 구성만 개정
+- Fieldwork는 같은 명세·fixture의 Before/After 비교, Morrow는 기존 Before 유지 후 After 구성 개정
 
 | 예시 | 수정 내용 |
 | --- | --- |

@@ -62,5 +62,31 @@
       "operations-default-desktop",
       "operations-default-mobile"
     ]
+  },
+  {
+    "title": "Project management dashboard — Untitled UI",
+    "author": "Jordan Hughes",
+    "url": "https://dribbble.com/shots/16586362-Project-management-dashboard-Untitled-UI",
+    "observedAt": "2026-10-01",
+    "kind": "dribbble",
+    "metrics": {"likes": null, "views": null},
+    "imageInspected": true,
+    "limitations": "Shot page and image access inspected; public reaction counters were not used as a global ranking.",
+    "principles": ["Keep the selected project's context visible while moving back to the project set"],
+    "rejected": ["Purple palette", "Promotional mockup framing", "Copying the navigation or component styling"],
+    "appliedTo": ["operations-default-desktop", "operations-default-mobile"]
+  },
+  {
+    "title": "Studio - Agency Project Management Dashboard",
+    "author": "Dodik Danang for Korsa",
+    "url": "https://dribbble.com/shots/27574945-Studio-Agency-Project-Management-Dashboard",
+    "observedAt": "2026-10-01",
+    "kind": "dribbble",
+    "metrics": {"likes": null, "views": null},
+    "imageInspected": true,
+    "limitations": "Shot page and image access inspected; no conversion or product usability claim.",
+    "principles": ["Align repeated project fields in a work list and use status color sparingly"],
+    "rejected": ["Four KPI cards", "Agency financial metrics", "Copying brand, icons, and client data"],
+    "appliedTo": ["operations-default-desktop", "operations-default-mobile"]
   }
 ]

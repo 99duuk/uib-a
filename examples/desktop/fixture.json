@@ -1,0 +1,15 @@
+{
+  "id": "fieldwork-matched-spec-v2",
+  "brand": "Fieldwork",
+  "workspace": "디자인 팀",
+  "menus": ["개요", "프로젝트", "받은 편지함", "팀 멤버"],
+  "summary": {"active": 12, "review": 4, "completedThisWeek": 8},
+  "projects": [
+    {"id":"brand","name":"브랜드 가이드","client":"오브제 스튜디오","owner":"김민서","status":"검토 대기","due":"10.08","done":17,"total":20,"type":"브랜딩","request":"표지 시안을 검토해 주세요."},
+    {"id":"web","name":"웹사이트 개편","client":"노스 커피","owner":"이도윤","status":"진행 중","due":"10.12","done":12,"total":24,"type":"웹 디자인","request":null},
+    {"id":"product","name":"제품 소개서","client":"모노 리빙","owner":"박지우","status":"진행 중","due":"10.14","done":8,"total":16,"type":"편집 디자인","request":null},
+    {"id":"package","name":"시즌 패키지","client":"소일 마켓","owner":"김민서","status":"검토 대기","due":"10.09","done":9,"total":10,"type":"패키지","request":"상자 전개도와 색상안을 검토해 주세요."},
+    {"id":"campaign","name":"가을 캠페인","client":"노스 커피","owner":"박지우","status":"검토 대기","due":"10.10","done":14,"total":18,"type":"캠페인","request":"메인 이미지와 문구를 검토해 주세요."},
+    {"id":"sign","name":"매장 사인 시스템","client":"오브제 스튜디오","owner":"이도윤","status":"검토 대기","due":"10.15","done":6,"total":8,"type":"공간 그래픽","request":"입구와 안내 사인 배치를 검토해 주세요."}
+  ]
+}
