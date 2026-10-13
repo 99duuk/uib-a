@@ -5,7 +5,7 @@
 - 기준 소스: `de59afcfa3b1e357ab978c3dc55f2ed08dc2dbf5` · 패키지 `1.1.1`
 - 작성 브랜치: `docs/evolution-plan`
 - 요청 범위: 유사 공개 프로젝트의 기능·사용성·컨셉·UI·UX 비교 및 재사용 설계
-- 관련 문서: [비교·채택 근거](COMPARISON.md) · [구현 순서·완료 조건](PLAN.md)
+- 관련 문서: [비교·채택 근거](COMPARISON.md) · [구현 순서·완료 조건](PLAN.md) · [비판 검토·개선 근거](REVIEW.md)
 - 이번 산출 범위: 명세·계획·근거 문서; 실행 코드·설치본 변경 없음
 
 ## 1. 제품 방향
@@ -63,6 +63,9 @@
 
 - 계약 산출물: `design-contract.json`; 사람용 요약의 HTML 근거 탭 표시
 - 제품 사실: 사용자 역할, 핵심 과제, 필수 콘텐츠 키, 필드/상태/동선, 기존 화면 근거
+- requiredContent 항목: key·근거·적용 entry/state/viewport/variant·필수 값/의미 제약·관련 action/transition·대상 의미 키·present/missing/unverified·비적용 이유
+- 핵심 동선: 시작 entry→사용자 행동→중간 상태→완료/실패 결과의 coverage 행; 문자열 존재와 실제 가시성/행동 연결의 별도 점검
+- 필수 정보 실패: 숨겨진 가격/조건·모바일/오류/확인 상태의 누락·단절된 CTA의 missing; 미관찰/미체험 동선의 unverified와 미완료 표시
 - 시각 기준: 색·타입·간격·크기·밀도·이미지·모션·반응형 규칙, 출처별 확신 수준
 - 변경 경계: `preserve-layout` 기본; 사용자 요청 시 `recompose-layout`; 화면별 예외와 이유
 - 기존 `brand`·`research`·`coverage`의 계약 참조 연결; 같은 사실의 여러 파일 중복 관리 최소화
@@ -80,6 +83,8 @@
 
 - 렌더 조건: viewport·DPR·browser/version·locale·timezone·color scheme·reduced motion·font/asset 준비 상태
 - 상태 조건: 화면·역할·fixtureVersion·mask 규칙·adapter hash·scroll container/tile·sourceRevision
+- 캡처 의미 hash: image bytes·영역 key/parent/rect·실제 scroll·렌더/fixture 조건 기준; capturedAt·실행 소요 시간·출력 경로의 제외
+- provenance hash: 전체 수집 기록 무결성의 별도 값; 의미 hash와 revision/판정 연결의 구분
 - 안정화: 현재 fonts/images 대기·animation/transition/caret 정지·두 frame 대기 재사용; 움직이는 캔버스/동영상의 adapter 또는 한계 표기
 - 타일별 준비: scroll/lazy image 이후 이미지·폰트 준비와 geometry 재수집
 - 재개 기록: target별 `pending/running/succeeded/failed`와 fingerprint·파일 hash; 임시 파일 작성 후 같은 디렉터리 rename
@@ -101,15 +106,20 @@
 - 모션 보기: frame CSS animation의 일시 정지/재개와 원래 상태 복원; GIF·canvas 완전 정지의 보장 없음, 리뷰어 UI 동결 제외
 - 기본 모드: 검토; 선택만으로 clipboard 덮어쓰기 금지; 명시적 복사 버튼과 키보드 조작
 - 다중 선택: 같은 entry·side·revision 안의 집합; 다른 화면/side의 별도 의견 연결
-- 사각 영역: CSS px 좌표와 기준 width/height·tile·scroll 저장; 배율과 DPR의 중복 적용 금지
+- 사각 영역: raster의 tile-local CSS px와 authored DOM의 viewport-local CSS px 구분; coordinateSpace·기준 width/height·tileHash 또는 visibleStateHashAtCreation 저장
+- DOM 영역 scroll: document와 필요한 중첩 container의 의미 키/검증 locator·실제 x/y offsets 수집; end/요청값만으로 위치 복원 금지
+- 영역 재표시: 원래 visible state와 실제 scroll 복원 확인 후 표시; patch/삭제 reflow·복원 불가 시 unresolved-region과 재지정 제공
+- 좌표 배율: parent fit/zoom과 DPR의 저장 좌표 중복 적용 금지
 - 텍스트 대상: authored DOM의 의미 키+텍스트 offset+quote+prefix/suffix; 캡처 이미지의 텍스트 정밀 anchor 불가 표기
 - 영역 선택 구분: 임의 영역 코멘트와 교차 요소 다중 선택; 삭제 대상의 실제 ID 목록 사전 표시
 - 계층 탐색: 선택 요소→부모→화면 루트; 숨겨진 자식·삭제 항목 상태 표시
 - 답글: annotation별 `replies[]`의 ID·text·authorLabel·createdAt·updatedAt; 답글 추가/수정/삭제·원래 대상 유지·HTML/JSON 보존
 - 의견 상태: `open/resolved`; 내용 편집과 재열기 지원; 생성/수정 시각·표시용 작성자 선택 입력
 - 화면 판정: `unreviewed/approved/changes-requested/deferred`; 리뷰어 작성의 로컬 판정, 인증된 전자서명 아님
-- 판정 유효성: entry·side revisions/content hashes·해당 entry의 deleted/previewEdits를 합친 visibleStateHash 조합; 어느 항목 변경 시 `needs-review` 파생 상태
-- 승인 시 미해결 P0/P1 존재: 해당 목록과 이유 확인 UI; 해소 또는 명시 보류 이유 없이 승인 완료 금지
+- 판정 유효성: entry·side revisions/semanticHash·해당 entry의 deleted/previewEdits를 합친 visibleStateHash 조합; 어느 항목 변경 시 `needs-review` 파생 상태
+- 주요 의견 fingerprint: entry별 제출된 P0/P1 issue ID·개정·상태·보류 이유의 결정적 집합; 승인 이후 추가/재열기/우선도 변경/import/undo의 유효성 재계산
+- 승인 표시 조건: entry/side semanticHash·visibleStateHash 및 주요 의견 fingerprint 일치; 신규 또는 재개정 미해결 P0/P1의 needs-review 전환
+- 승인 시 미해결 P0/P1 존재: 해당 목록과 이유 확인 UI; 해소 또는 해당 issue 개정에 연결된 명시 보류 이유 없이 승인 완료 금지
 - 대량 동작: 현재 필터에 포함된 화면 수·대상 요약 확인; 숨은 화면의 자동 승인 제외
 - undo/redo 대상: 삭제/복원·의견 편집/상태·판정·시안 조정; 탐색/배율/hover 제외
 - 이력 경계: 현재 세션 내 undo/redo; 저장본 재열기 시 최종 검토 상태와 원본 복원 가능, 세션 undo stack 복구 비보장
@@ -122,7 +132,12 @@
 - 새로고침: 기존 미저장 상태 초기화 계약 유지; 변경 존재 시 가능한 범위의 이탈 경고
 - localStorage: 필수 사용 없음; 복구 초안 기능 도입 시 별도 선택과 저장본 우선순위 필요
 - JSON 가져오기: 같은 reviewId/bundleHash의 항목별 차이 미리보기·충돌 선택; 전체 덮어쓰기 기본값 금지
+- 이전 bundle의 상태: 검증된 previousBundle과 해당 상태를 함께 제공한 명시 rebase 경로; 동일 project/review 계열·entry/side semantic hash·대상 ID 확인 후 무변경 대상만 유지
+- 같은 reviewId만 가진 다른 bundle: 직접 import 거절; 원본 bundle 근거 없는 추정 rebase 금지
+- 미작성 의견: drafts의 원래 entry/side/revision/target·IME 확정 text·수정 시각 저장, 화면 전환·파일 저장·extract·import 충돌·revision unresolved 연결
+- draft 의미: dirty 상태 포함·미제출 표시·승인/인계 의견 제외; 사용자의 등록/버리기 동작 없이 자동 제출·폐기 금지
 - 다른 revision: 동일 ID 추정 적용 금지; `unresolved` 보존 후 사용자 재연결
+- 텍스트 조정 경계: 하위 의미 키 없는 leaf 또는 명시 text node만 변경; 부모 textContent 교체로 자식 ID/markup/anchor 손실 금지
 - 빠른 조정: 작성형 After에 한정한 text/token/style/asset patch; 변경 전 값·변경 후 값·대상 key·base hash 기록
 - 속성 검사: 작성형 After의 computed color/font/spacing/rect와 부모 간격 표시; Before는 수집된 값만 표시, 미수집 CSS의 실시간 값 위장 금지
 - style 허용 범위: color·font token·spacing token·text alignment·제한된 flex/grid 정렬; 임의 CSS/HTML/script 입력 제외
@@ -131,7 +146,8 @@
 - 조정 반영: 저장/인계 시 patch 유지; 다음 생성 단계에서 선택 patch의 원본 HTML 반영·After revision 증가·관련 판정 만료
 - 출력 형식: 사람이 읽는 Markdown과 기계용 JSON; 필수 내용은 동일 계약에서 생성
 - PNG 브라우저 출력: 내장 원본 raster·diff·해당 영역 crop과 의견 overlay의 Canvas 합성; 출력 상태의 원본/주석 표시
-- 현재 authored DOM PNG: 저장한 검토 HTML을 `scripts/export-review.mjs --format png --view current`로 로컬 Playwright 재캡처; 삭제 reflow·text/style patch의 실제 frame 렌더 결과
+- 현재 authored DOM PNG: `scripts/export-review.mjs <review.html> <new-output> --format png --view current`의 JSON 비실행 추출→bundle/state/자산/DOM 재검증→설치본 trusted shell/frame 재구성→deadline 있는 offline Playwright 캡처
+- 입력 HTML의 shell/script 실행 제외; hash는 인증 근거가 아닌 무결성 근거; 삭제 reflow·text/style patch의 실제 frame 렌더 결과
 - PNG 사용성: 원본 이미지의 브라우저 직접 저장, 현재 시안의 로컬 export 경로 안내; 브라우저 단독 DOM→PNG 기능의 허위 제공 금지
 - 로컬 PNG export: 설치된 브라우저·내장 자산만 사용·network offline·새 출력 경로·처리한 saved HTML hash 기록
 - 소스 연결: framework-neutral `sourceHint`와 provenance; React 개발 환경 어댑터의 선택적 확장
@@ -153,7 +169,9 @@
 └───────────────┴────────────────────────────────┴──────────────────┘
 ```
 
-- 레이아웃 기준: 1200px 이상 3영역; 캔버스 확보를 위한 양옆 접기와 크기 조절
+- 레이아웃 기준: 1200px 이상에서 3영역 선택 가능; 기본 배치는 현재 캔버스의 가용 너비와 시안 viewport 기준
+- 비교 기본값: 나란히 pane 각각 400px 이상 확보 시 split, 부족 시 한쪽 탭; 양옆 패널 자동 접기·명시 재열기·한쪽/나란히 수동 전환
+- 가독성 경로: 100% 보기·팬·목록 선택 도구 상시 접근; fit 축소본의 메뉴 접근만으로 내용 검토 완료 판정 금지
 - 중간 너비: 768~1199px의 화면 목록 접기·맥락 패널 overlay; 화면 시안 자체 viewport 불변
 - 상단 필터 축소: 화면 목록에서 group/screen 탐색; 캔버스에는 state/viewport/variant만 유지
 - 정보 노출: 사람용 label 우선; 긴 ID·selector·source path는 상세 펼침과 복사
@@ -180,6 +198,7 @@
 - 320·390px 검토 가능; 고정 PC 시안은 fit/100%·팬으로 탐색
 - 모바일 다중 선택: 길게 누르기 의존 대신 `다중 선택` 명시 모드와 완료 버튼
 - 영역 의견: 시작/끝 지점 선택 또는 드래그; 스크롤 동작과 모드 구분
+- 캔버스 높이: 탐색 시 bottom sheet 축소/닫기, 열린 시트의 캔버스 복귀 버튼 유지; 작은 높이/키보드에서 입력·닫기·저장 도달과 100% 양끝 대상 선택 확인
 - 터치 목표: 최소 44×44 CSS px; 고정바 safe-area 반영
 - 시트 상태: 캔버스 탐색 시 축소·의견 작성 시 확장; 입력 키보드의 저장/닫기 가림 방지
 - 닫기/전환: 미완성 의견 초안 유지; 다른 화면의 의견으로 자동 부착 금지
@@ -194,13 +213,34 @@
 - 대비·포커스·200% 확대·reduced motion 확인; 색만으로 선택/승인 상태 표시 금지
 - 체험 모드: 기존 선언형 화면 전환·details·로컬 입력만 허용; 의견 선택과 동작 충돌 방지
 
+### 조작 모드의 단일 입력 계약
+
+| 활성 조작 | 가능한 동작 | 제약·취소 |
+| --- | --- | --- |
+| 요소 | 탭/클릭·목록의 단일 선택 | drag의 의견 생성 없음 |
+| 다중 | modifier/checkbox/명시 다중 선택 | 같은 entry/side/revision; 완료/취소 후 요소 모드 |
+| 영역 의견 | 사각 rect의 새 의견 | 빈 공간 허용·기본 pan과 배타 |
+| 영역 요소 | indexed rect 교차 요소의 선택 집합 | 포함 대상 사전 표시·root 자동 포함 제외 |
+| 텍스트 | authored DOM native Range | raster 비지원·표준 keydown/IME 유지 |
+| 이동 | 확대 캔버스 pan·scroll | 의견/삭제 상태 변화 없음 |
+| 체험 | 선언형 전환·details·로컬 입력 | 선택/의견 gesture 중지·임의 앱 script 없음 |
+
+- 활성 도구: 캔버스마다 한 조작만 활성; pointercancel/Escape/entry 또는 비교 전환의 미완료 gesture 취소
+- 슬라이더 손잡이·입력·메뉴·시트: 캔버스 picking/drag 비전파
+- raster 비교: 텍스트/DOM patch 비지원 이유, 원본 DOM 보기와 요소 목록 경로 제공
+- 모드 검증: 같은 drag의 선택/의견/pan 중 단일 결과; 취소 후 deleted/annotation 불변
+
 ## 5. 데이터 계약 v2
 
 - 저장 bundle·review state·입력 manifest의 각 `schemaVersion: 2`
 - 읽기 지원: v1·v2; 쓰기 기본: v2; 알 수 없는 상위 버전의 명시적 거절과 원본 보존
 - canonical bundle의 기존 project/viewports/brand/research/coverage/entries/elements/assets/indexHash 유지
 - 추가 필드: `designContract`, `captureProfiles`, `comparisons`, `bundleHash`, `sourceBuild`
-- `bundleHash`: assets·entries·index·계약을 포함한 결정적 직렬화 hash; 자기 필드 제외; 인증/서명 의미 없음
+- `bundleHash`: assets·entries·index·계약과 수집 provenance의 결정적 직렬화 hash; 자기 필드 제외; 인증/서명 의미 없음
+- semanticHash: entry/side의 화면 내용·영역·렌더 조건·필수 정보 계약, 실행 시각/경로 등의 volatile provenance 제외; v1 기존 hash의 무결성 검사는 변경 없이 유지
+- visibleStateHash: 해당 entry의 삭제 ID 정렬·대상/필드별 최종 patch값 정규화; annotation 배열 순서·author/savedAt/편집 이력 제외
+- hash 구현: object key 정렬·집합 정렬·화면/동선 등 의미 순서 보존; Node/browser 동일 fixture bytes·hash 확인
+- content 변경 판정: semanticHash 또는 의미 키 변경 기준; capturedAt만 변경된 재캡처의 강제 revision 증가/승인 만료 제외
 - 입력 `after.kind`: `authored/capture/image/missing`; 기존 v1 `after.file`의 `authored` 이행
 - 입력 `before.kind`: 기존 `dom/manual/image/missing` 유지; `dom`의 의미는 캡처 이미지의 DOM 영역 맵
 - `elements[].sourceHint`: 선택적 file/line/component/provenance; 미제공 시 `null`
@@ -211,7 +251,8 @@
 | `schemaVersion`, `reviewId`, `bundleHash`, `indexHash` | 상태와 해당 원본의 연결 |
 | `deleted` | 기존 의미 ID 배열; 중복 제거·존재 여부 검증 |
 | `annotations` | ID·targets·text·replies·priority·status·authorLabel·createdAt·updatedAt |
-| `decisions` | entry·variant·content fingerprint·visibleStateHash·value·reason·decidedAt |
+| `decisions` | entry·variant·content fingerprint·visibleStateHash·criticalIssuesHash·value·reason·decidedAt |
+| `drafts` | 원래 target·text·updatedAt·미제출 상태; 저장/추출 포함 |
 | `previewEdits` | ID·target ID·종류·base value/hash·next value·createdAt |
 | `unresolved` | 이전 payload·이유·이전 revision·후보 연결·해결 여부 |
 | `savedAt` | 파일 생성 시각; 로컬 브라우저 시각의 비인증 값 |
@@ -220,7 +261,7 @@
 | --- | --- | --- |
 | `element` | element ID | 매핑된 Before·After |
 | `elements` | 같은 entry/side/revision의 ID 배열 | 다중 요소 |
-| `region` | entry·side·revision·tile·rect CSS px·기준 크기·scroll | 이미지 또는 DOM |
+| `region` | entry·side·revision·coordinateSpace·rect CSS px·기준 크기·tileHash/visibleStateHashAtCreation·실제 scroll snapshot | 이미지 또는 DOM |
 | `text` | element ID·start/end·quote·prefix/suffix | 작성형 After DOM |
 | `screen` | entry·side·revision | 화면 전체 |
 
@@ -240,7 +281,9 @@
 - 표시 문자열: textContent·안전한 JSON embedding; 의견의 raw HTML 실행 금지
 - frame 통신: event.source·token·entry·side·허용 message type·payload 크기 검사
 - frame 권한: sandbox allow-scripts만 유지; 애플리케이션 script/event handler·form 제출·외부 탐색 차단
-- import/export 경로: run 경계 밖 쓰기·`..`·symlink 탈출·지원 밖 MIME 거절
+- import/export 경로: 출력 run 밖 쓰기 거절; 입력은 manifest root와 명시 asset root의 normalize+realpath containment 확인
+- 상대 자산: 추출본 source/../assets처럼 승인 root 안의 참조 허용; root 탈출·외부 symlink·지원 밖 MIME 거절
+- 인증 adapter/storageState: 명시 지정 외부 경로의 별도 읽기 정책; 결과물/일반 asset root의 포함 제외
 - 대형 검토: 현재 entry의 frame만 생성; 목록의 기본 검색/필터 후 필요 시 가상화; 요청 전 범용 편집 프레임워크 추가 금지
 - 초기 성능 목표: 50 entry·5,000 element·500 comment 기준 조작 응답 100ms 이내·파일 열기 3초 이내의 중앙값; 장비·브라우저·파일 크기와 함께 보고
 - 성능 목표 초과: 원인·측정값 공개와 수정; 측정 없이 충족 주장 금지

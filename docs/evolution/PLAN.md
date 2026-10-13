@@ -3,7 +3,7 @@
 - 상태: 계획 완료 대상·기능 구현 미착수
 - 기준: `de59afcfa3b1e357ab978c3dc55f2ed08dc2dbf5` · 2026-10-13
 - 작성 브랜치: `docs/evolution-plan`
-- 계약: [SPEC.md](SPEC.md) F01~F18 · 근거: [COMPARISON.md](COMPARISON.md)
+- 계약: [SPEC.md](SPEC.md) F01~F18 · 근거: [COMPARISON.md](COMPARISON.md) · [비판 검토·개선](REVIEW.md)
 - 전체 목표: 명세의 모든 채택 항목과 기존 동작의 함께 충족
 - 단계 완료의 의미: 전체 구현으로 가는 중간 점검; 이후 단계의 사용자 재요청 의존 종료 금지
 
@@ -38,6 +38,7 @@ flowchart LR
     P2 --> P4[P4 선택·의견·판정]
     P2 --> P5[P5 시각 비교]
     P3 --> P5
+    P4 --> P5
     P4 --> P6[P6 UI·조정·인계]
     P5 --> P6
     P1 --> P6
@@ -45,6 +46,8 @@ flowchart LR
 ```
 
 - 추천 구현 순서: P0 → P2 → P4 → P1 → P3 → P5 → P6 → P7
+- 사용자 동작의 수직 검증: P2 저장/이행, P4 의견/판정, P5 원본 비교, P6 조정/current 출력의 각 단계에서 실제 왕복 확인; 최종 P7까지 검증 누적 금지
+- 구현 완료 범위: 각 단계의 통과 F/A 항목·미완료 목록 기록, 18개 요구의 전체 완료 전 partial 표시
 - 초반 사용자 가치: 데이터 손실 없는 의견·판정·저장과 기존 선택 UX 개선
 - 병렬 가능 범위: P0 이후 디자인 자료/문서, 캡처 코드, 상태 모델의 독립 작업
 - 동시 수정 금지 파일: `scripts/build.mjs`, `scripts/lib.mjs`, `assets/reviewer/viewer.js`, `scripts/verify.mjs`
@@ -63,6 +66,7 @@ flowchart LR
   - 버전 `1.1.1` 설치본/소스 차이와 패키지에 유입 가능한 `.DS_Store`·비추적 문서 조사
 - 완료 조건:
   - v1→v2 필드 대응표·거절/미해결 조건·trust boundary 확정
+  - 전체/semantic/visible/critical-issues hash의 정규화 범위·Node/browser 공통 fixture 확정
   - 각 F 항목의 변경 파일·수용 사례·도입 출처 연결
   - 코드/자료 편입 전 해당 파일의 재배포 조건 확인
 - 단계 의존: 없음
@@ -78,12 +82,13 @@ flowchart LR
   - `--query`·선택 domain을 받는 로컬 검색, match/no-result 구분; 자동 레이아웃 강제 없음
   - 사용자 지시·기존 명세·브랜드·직접 관찰·검색 후보의 우선순위 명시
   - 같은 데이터·상태의 실질 대안과 이전 지적 대비 수정 결과 기록
+  - requiredContent의 entry/state/viewport/variant·가시성·action/transition coverage; 정상/빈 결과/오류/확인 동선의 비적용/미확인 이유
 - 완료 조건:
   - 계약만 전달받은 작성자의 필수 필드·동선·브랜드 일치 시안 작성 가능
   - 프로젝트별 기존 스타일 보존과 명시적 재구성 요청의 구분
   - 한국어/영문 알려진 UX 과제 5종의 검토된 관련 레코드 조회·무관 질의 1종의 no-result 출력, 전부 no-result의 통과 금지
   - 비평 지적의 실제 화면·revision 근거와 미관찰 항목 표시
-  - A15·A19의 필수 정보 보존·실질 대안·비평→수정→재비평 및 save/extract/handoff 연결
+  - A15 전체와 A19의 필수 정보/대안/비평 부분 확인; 저장·추출은 P2 기반, 전체 handoff는 P6/P7 확인
 - 기능: F01~F03
 - 단계 의존: P0; P2와 독립 진행 가능
 
@@ -93,14 +98,18 @@ flowchart LR
 - 실행 내용:
   - 하나의 순수 상태 모듈에 validate/migrate/apply/merge/rebase 기능 배치
   - Node 빌드·추출과 HTML 리뷰어의 동일 계약 사용; 저장용 별도 상태 변환기 중복 방지
+  - 브라우저 표준만 쓰는 import 없는 순수 ES module; Node 직접 import와 trusted HTML inline module 조립, 원격 module import·단순 regex export 제거 제외
   - `jsonScript`·asset hash·revision 검증의 유지·확장
   - v1 deleted/unresolved 이행, v2 annotation/decision/previewEdit 보존
   - current bundleHash 일치 import의 충돌 미리보기와 항목별 해결
   - 다른 revision target의 unresolved 보존과 명시 재연결
+  - 직접 import와 검증된 previousBundle+state 기반 rebase의 별도 진입; 한 화면 수정 후 무변경 화면 의견/판정 유지
+  - drafts의 저장/추출·dirty·충돌 처리; 미제출 의견의 승인/인계 제외
+  - entry별 criticalIssuesHash와 승인 후 P0/P1 변경·import·undo 재계산
   - 세션 undo/redo·batch transaction·새 행동 시 redo 가지 초기화
   - 원본 shell+bundle+state 기반 저장, 저장 후 dirty 표시 갱신
 - 완료 조건:
-  - A01~A05·A09의 데이터 손실/오적용 없음
+  - A01 및 A03~A05의 상태/이행/저장 부분 확인; A02 UI 조작은 P4, patch는 P6, A09 좌표/선택은 P3/P4 확인
   - v1 저장본의 v2 저장·추출·재빌드 round trip
   - 악성 의견·깨진 state·unknown version·부모 cycle·다른 bundle import의 명시 처리
 - 기능: F10·F11·F17 기반
@@ -115,11 +124,13 @@ flowchart LR
   - navigation 전 정지 규칙과 타일 준비 이후 fonts/images 재대기
   - DOM fallback 순번 key의 revision-local 표시; sourceRevision/manifest revision 대응 확인
   - capture record fingerprint·PNG/map hash·원자 완료 기록
+  - capturedAt/path/timing을 뺀 semanticHash와 전체 provenance hash 구분; 시각만 다른 동일 화면의 revision 유지
+  - document와 실제 중첩 container scroll offset·tile 기준 크기의 수집, 요청 scroll과 실제 scroll의 분리
   - `--resume <이전-run>`의 읽기 전용 재사용과 새 run 산출
   - iframe/shadow/canvas 미지원 내부의 영역 fallback·coverage 사유 표시
   - 제한된 동시 context 실행의 상한과 finally 정리
 - 완료 조건:
-  - A06~A08의 실패 격리·fingerprint 변경·손상 재개·좌표 일치
+  - A06과 A07의 캡처/재개 부분 및 A23의 실제 scroll 기록 확인; A07 비교/A08 diff는 P5, A23 영역 UI/current 출력은 P4/P6 확인
   - 승인되지 않은 쓰기 요청·자동 Git worktree 생성 없음
   - sourceRevision 미제공 시 안전한 재캡처 또는 adapter 제공 콘텐츠 fingerprint 필요
 - 기능: F04·F05·F14의 adapter 기반
@@ -138,9 +149,10 @@ flowchart LR
   - 근거·확신 수준·변경 후보의 상세 패널 연결
   - bbox 순수 함수의 필요 시 선별 재사용과 고지
 - 완료 조건:
-  - A02~A05·A09~A11의 saved state·다중 조작·revision 만료·입력 비간섭
+  - A02의 의견/판정/삭제 저장, A03~A05의 검토 UI, A09의 선택/좌표, A10/A11의 현재 UI 입력 부분 확인; patch/current 출력·최종 반응형은 P6 확인
   - Before region 의견과 After DOM 의견의 동등한 저장
   - 선택할 수 없는 DOM/텍스트의 명확한 fallback
+  - A20/A21과 A22의 선택/의견/취소 및 A23의 실제 scroll/영역복원 부분 확인; A22 slider는 P5, A23 patch/current export는 P6, 전체 조합은 P7 확인
 - 기능: F07~F10·F15의 기반
 - 단계 의존: P2
 
@@ -155,14 +167,13 @@ flowchart LR
   - 슬라이더·opacity overlay·diff·확대·동기 scroll; 선택 모드와 구분
   - bbox→캡처 당시 region의 복수 후보 계산·추정 표시
   - 브라우저 Canvas의 내장 원본/비교/영역 PNG 출력; 주석 overlay 포함 여부 선택
-  - `scripts/export-review.mjs`의 saved HTML→오프라인 Playwright→현재 After frame PNG 경로; DOM reflow·text/style patch 렌더
-  - CLI의 새 결과 디렉터리·원본 saved HTML hash·current/original view 표시; runtime DOM rasterizer 도입 없음
+  - 현재 DOM export의 P6 이관; P5의 원본 raster/비교/crop 출력만 완료 조건 적용
 - 완료 조건:
-  - A07·A08·A12의 diff 정확성·원본/검토 구분·export 크기/좌표
+  - A07·A08의 diff 정확성·비교 조건·원본 export 크기/좌표; A12 current export는 P6 완료 조건
   - HTML 열기 시 외부 모듈·서버 없는 모든 비교 기능
-  - 삭제/빠른 조정 뒤 오래된 raster의 현재 상태 오인 없음
+  - 삭제 뒤 원본 raster와 현재 상태 구분; 빠른 조정 뒤 구분은 P6 확인
 - 기능: F06·F16
-- 단계 의존: P2·P3; P4와 통합 시 frame message 타입 고정
+- 단계 의존: P2·P3·P4; 기존 frame message 타입을 합의한 뒤 비교 UI 연결
 
 ### P6 — 검토 UI·빠른 조정·인계
 
@@ -170,14 +181,18 @@ flowchart LR
 - 실행 내용:
   - 화면 탐색/진행 상태·집중 캔버스·의견/변경/근거 패널
   - 3영역 desktop·접이식 tablet·한쪽 탭/bottom sheet mobile
+  - 가용 캔버스 너비 기준 split/한쪽 기본 보기·패널 접기·100%/pan; 시안 viewport 불변
   - 목록/필터/단축키·터치·한글 IME·포커스와 오류 복구
   - 작성 After의 text/token/spacing/alignment/asset patch preview
   - patch의 원본 base 확인·undo/redo·저장·다음 revision 반영
+  - text patch의 leaf/명시 text node 제한과 중첩 의미 키·의견 보존
+  - current PNG export: 입력 HTML 비실행 JSON 추출→내용/자산/상태 검증→설치본 trusted shell 재생성→deadline 있는 offline Playwright; 외부 입력 shell 실행 제외
+  - CLI의 새 결과 디렉터리·saved input hash·original/current 표시; runtime DOM rasterizer 도입 없음
   - 공통 sourceHint + React 선택 adapter + Vue/일반 DOM 제공 metadata 예시
   - Markdown/JSON 요청 export와 동일 schema; 사용자 지정 경로 밖 자동 이슈 발행 없음
   - 계약·비평·판정·필수 유지 콘텐츠를 포함한 다음 작성자 인계
 - 완료 조건:
-  - A10~A16의 모바일·접근성·patch·source fallback·인계
+  - A10~A16·A20~A24의 모바일·접근성·patch·current export·source fallback·인계
   - 320px에서 조작 메뉴 접근, 200% 확대에서 제어 기능 접근
   - 현재 baseline 대비 긴 ID·필터·선택 패널의 상시 점유 축소 확인
 - 기능: F12~F15와 F01~F11 통합
@@ -193,12 +208,12 @@ flowchart LR
   - Chromium 자동 검사와 WebKit/Firefox 저장·선택·키보드 수동/자동 최소 smoke
   - 실제 320/390/768/1440 화면·터치·키보드·screen reader 기본 탐색 기록
   - 50 entry 규모의 크기·메모리·응답 측정과 고지
-  - package 재귀 포함에서 `.DS_Store`·임시 파일·조사 원문·출처 없는 자산 제외
+  - package 재귀 포함에서 `.DS_Store`·임시 파일·조사 원문·개발용 docs/evolution·출처 없는 자산 제외; runtime references 유지
   - `sourceBuild` SHA·파일 hash 목록·THIRD_PARTY_NOTICES·관련 licenses 포함
   - v2 format의 `2.0.0` 후보 릴리스; 실제 릴리스 시 기존 v1 읽기 호환과 이전 도구의 v2 미지원 명시
   - 새 경로 설치 검증 후 기존 설치본 백업·활성 경로 갱신; 사용 중 source와 설치본 hash 비교
 - 완료 조건:
-  - A01~A19 통과 또는 미완료 명시와 완료 보류
+  - A01~A24 통과 또는 미완료 명시와 완료 보류
   - 실제 실행한 브라우저·OS·fixture·source SHA·package SHA 증거
   - 패키지와 양쪽 사용 대상 skill 경로의 일치, 기존 설치본 보존
 - 기능: F17·F18 및 전체 완료
@@ -211,28 +226,33 @@ flowchart LR
 | A01 | 기존 v1 demo·삭제 저장본 → extract → v2 build | entry·Before·원본 자산·삭제 의도 보존; 새 필드 기본값 | F11·F17 |
 | A02 | 의견·판정·삭제·patch 저장 → 파일명/경로 변경 → 새 offline context | 동일 상태·원본 복원·외부 HTTP 0건·localStorage 불필요 | F08~F12 |
 | A03 | 자식/부모 삭제·부모 복원·다중 삭제·undo/redo | 자식 의도 보존·batch 1회 undo·새 수정 뒤 redo 초기화 | F07·F10 |
-| A04 | R1 의견/승인 후 R2 content 변경·기존 ID import | 오래된 target 미해결·승인 needs-review·무변경 entry 유지; 같은 revision의 삭제/patch 뒤 승인 만료 | F09·F11 |
+| A04 | R1 의견/승인 후 R2 한 화면만 수정 → previousBundle+state rebase | 변경 target 미해결·승인 needs-review·무변경 화면 의견/판정 유지; 순서/savedAt만 변경된 상태의 불필요 만료 없음 | F09·F11 |
 | A05 | 다른 review/bundle·중복 annotation ID·unknown schema·거대 JSON import | 거절/충돌 미리보기·기존 검토와 원본 보존 | F11·F17 |
 | A06 | target A 성공·B timeout·C 성공 → 중단 → resume | A/C 완전 hash 확인 후 재사용·B만 재시도·실패 목록 표시 | F04·F05 |
-| A07 | DPR·locale·fixture·adapter·source·scroll 변경 또는 PNG 손상 | fingerprint 불일치 재캡처; 타일/좌표 불일치 diff 비활성 | F04~F06 |
+| A07 | DPR·locale·fixture·adapter·source·scroll 변경 또는 PNG 손상; capturedAt만 다른 동일 화면 | 실제 조건 변경의 재캡처·불일치 diff 비활성; 시각만 다른 경우 semanticHash/revision 유지 | F04~F06 |
 | A08 | 같은 흰 PNG·한 작은 영역 변경·AA·크기 불일치 | 동일 bbox null·변경 mask의 실제 bbox·불일치 이유 | F06 |
 | A09 | 50%/100%·DPR2·nested scroll·sticky header·모달 | 올바른 ID·rect·텍스트 quote·다중 선택; 다른 frame 메시지 무시 | F07·F08·F17 |
-| A10 | 320/390/768/1440px·200% 확대·모바일 키보드·touch drag | 캔버스 탐색·의견·판정·저장 가능·가려진 필수 버튼 없음 | F15 |
+| A10 | 1200px+1440px PC 시안·320/390/768/1440px·200% 확대·모바일 키보드 | 본문 확인→100% 양끝 선택→의견→판정→저장; 가용 폭 기반 기본 보기·시트/키보드 닫기·필수 도구 접근 | F15 |
 | A11 | Tab/Enter/Escape·IME 조합·입력창 undo·screen reader | 의미·포커스·상태 안내·본문 입력 이력 보존 | F07·F10·F15 |
 | A12 | 원본 diff → After 삭제/patch → 저장 → CLI current PNG export | reflow·text/style 반영된 실제 frame PNG·원본/검토 결과 구분·bbox/크기 정확 | F06·F12·F16 |
-| A13 | token/text patch 저장 → 추출 → 원본 반영 | base 불일치 거절·선택 patch 적용·revision 증가·판정 만료 | F11·F12 |
+| A13 | 중첩 의미 키/자식 의견을 가진 부모 text patch·token patch → 저장·추출·반영 | 부모 통째 교체 거절·leaf/text node 편집 허용·자식 대상 보존·revision 증가·판정 만료 | F11·F12 |
 | A14 | React source adapter 없음·Vue metadata·image-only Before | source null 또는 근거 있는 hint·기본 리뷰 기능 정상 | F14 |
 | A15 | 알려진 한글/영문 과제 5종·무관 질의 1종·브랜드 충돌 | 5종의 유효한 관련 결과·무관 질의 no-result·브랜드 우선 | F01~F03 |
 | A16 | 코멘트/판정/미해결을 Markdown·JSON export → 다음 작성자 작업 | 동일 target/revision·요구·제약·근거·누락 없는 인계 | F13 |
-| A17 | `</script>` 의견·외부 asset·path traversal·cycle·stale token | 실행/유출/경로 탈출 없음·명확한 오류·원본 보존 | F17 |
-| A19 | 필수 가격/조건/상태를 가진 fixture → 2개 구조 대안 → P1 지적 → 수정·재비평 → 저장·추출·인계 | 필수 콘텐츠 전부 보존·색상 외 구조 차이·issue 해결/잔존과 revision 추적·근거 유지 | F01·F03·F11·F13 |
+| A17 | `</script>` 의견·외부 asset·source/../assets·root 밖 symlink·cycle·stale token | 정상 내부 상대경로 허용·실행/유출/경로 탈출 없음·명확한 오류·원본 보존 | F17 |
 | A18 | 패키지 신규 설치 → demo/저장 검증 → 활성본 비교 | source/package/install hash 일치·관련 고지·이전 설치본 보존 | F18 |
+| A19 | 필수 가격/조건·mobile/desktop·정상/빈 결과/오류/확인 동선 → 2개 구조 대안 → 일부 정보 숨김/CTA 단절 → 수정·재비평 | 가시성/action 누락의 missing·미관찰 unverified·필수 조건 보존·실질 구조 차이·issue/revision 추적·저장/인계 근거 유지 | F01·F03·F11·F13 |
+| A20 | 승인 후 P0 추가·P1 재열기/우선도 변경·import·undo | criticalIssuesHash 재계산·needs-review·issue 개정별 보류 이유·다른 entry 승인 유지 | F08·F09·F11 |
+| A21 | 작성 중 한글 의견 → 화면/side/variant 전환 → 저장·이동·재열기·import 취소 | 원래 target와 text의 draft 보존·미제출 표시·dirty·승인/인계 제외·취소 시 기존 상태 유지 | F08·F11·F15 |
+| A22 | 같은 drag의 요소/영역 의견/영역 요소/텍스트/이동/slider·Escape/pointercancel | 활성 모드의 단일 결과·중복 mutation 없음·취소 시 상태 불변·IME/scroll 보존 | F06~F08·F15 |
+| A23 | document+내부 end scroll·sticky 영역 의견 → patch reflow → 저장·재열기·export | 실제 offsets/visibleStateHash 복원 또는 unresolved-region·조용한 오부착 없음 | F07·F08·F11·F16 |
+| A24 | 정상 payload/state + 악성 top-level script·변조 After script → current PNG CLI | 외부 입력 shell 미실행·DOM/asset 재검증·위험 입력 거절·정상 patch 렌더 유지·deadline | F16·F17 |
 
 - 기존 실행 기반: `npm run demo`, `npm run verify:demo`, `node scripts/verify.mjs <html> <evidence>`
 - 추가 검사 위치: 순수 상태·비교 로직의 Node 내장 test와 기존 Playwright verifier; 동일 로직의 중복 자체 검증기 금지
 - 시각 품질 확인: 같은 콘텐츠의 실제 전후 화면·필수 정보·첫 행동·다양한 상태; test 통과의 미감 대체 금지
 - 독립 스킬 평가: 제품 과제·기존 화면만 제공한 평가자의 결과 관찰; 정답 문구·예상 패치 선공개 제외
-- 현 계획 검토와 향후 기능 검증의 구분: 현재 A01~A19 실행 결과 없음
+- 현 계획 검토와 향후 기능 검증의 구분: 현재 A01~A24 실행 결과 없음
 
 ## 5. 변경 영향과 작업 책임
 
@@ -253,6 +273,7 @@ flowchart LR
 ## 6. 종료·실패·복구
 
 - 기준 artifact 보존: 모든 신규 결과의 새 run 디렉터리 생성
+- 단계별 검사 보고: 부분 검사의 A 항목·세부 동작만 통과 기록; A01~A24 전체 시나리오 완료는 P7 통합 결과 기준
 - 현재 정적 발견사항 우선 처리: saved state의 indexHash 미검사, 빈 요소 목록의 step 대상 접근, text 선택과 blanket keydown 차단의 충돌; 각 P2/P4의 회귀 사례 포함
 - schema 오류: 입력 파일 유지·오류 경로와 값 종류 표시·부분 정상 저장 금지
 - 캡처 오류: target 단위 격리·실패 stage 기록·성공 산출물 보존
