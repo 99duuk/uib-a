@@ -55,7 +55,7 @@
     $('before-kind').textContent=({dom:'실제 캡처 · DOM 영역',manual:'제공 이미지 · 수동 영역',image:'제공 이미지 · 전체 선택',missing:'원본 미확보'})[active.before.kind];
     $('after-revision').textContent='개선 시안 · '+active.after.revision;
     $('entry-context').textContent=`${active.title} / ${active.state} · ${active.route||'경로 미지정'} · ${active.notes||'화면 안 버튼은 검토용입니다.'}`;
-    $('previous-element').disabled=!currentElements().length;$('next-element').disabled=!currentElements().length;optionList($('element-picker'),[['','요소 선택'],...currentElements().map(e=>[e.id,`${e.side==='after'?'After':'Before'} · ${e.tag} · ${e.label}`])],'');
+    $('previous-element').disabled=!currentElements().length;$('next-element').disabled=!currentElements().length;optionList($('element-picker'),[['','요소 선택'],...currentElements().map(e=>[e.id,`${e.side==='after'?'After':'Before'} · ${e.tag} · ${e.label.replace(/\s+/g,' ').trim().replace(/^(.{32}).+/u,'$1…')}`])],'');
     makeFrame('before');makeFrame('after');fit();renderDeletions();renderReview();loadDraft();comparisonView();
   }
   $('before-tab').onclick=()=>{$('comparison').value='before';comparisonView();fit();};$('after-tab').onclick=()=>{$('comparison').value='after';comparisonView();fit();};$('toolbar-more').onclick=()=>document.querySelector('.toolbar').classList.toggle('extra-open');let wasMobile=innerWidth<768;window.addEventListener('resize',()=>{const mobile=innerWidth<768;if(mobile&&!wasMobile&&$('comparison').value==='both'){$('comparison').value='after';comparisonView();}wasMobile=mobile;fit();});
