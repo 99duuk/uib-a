@@ -96,14 +96,15 @@ The demo rebuild reuses its bundled Before captures and generates After from the
 
 | Control | What it does |
 | --- | --- |
-| Screen / state / viewport / variant | Switch between authored entries |
+| Review level | Compare only by default; Simple edits; Advanced review |
+| Screen / state / viewport / variant | Entry picker across every level; detailed search and filters |
 | Side by side / single view | Compare or focus on one version |
 | Fit / 100% | Scale the preview or inspect actual CSS pixel size |
 | Click / tap / keyboard / element list | Select an element and copy its identity |
 | Ancestor selection | Select a containing card or section |
 | Remove | Hide After DOM with reflow; mask Before screenshot regions |
 | Restore / undo | Recover individual elements or all removals |
-| Save reviewed HTML | Preserve deletion state while keeping originals restorable |
+| Save reviewed HTML | Comments, drafts, decisions, deletions and preview edits with restorable originals |
 | Local experience mode | Follow declared transitions between mockup states |
 
 Unsaved removals reset on refresh. A saved HTML reopens with its saved removals. It remains editable and restorable.

@@ -8,7 +8,7 @@
 - 관련 문서: [비교·채택 근거](COMPARISON.md) · [구현 순서·완료 조건](PLAN.md) · [비판 검토·개선 근거](REVIEW.md)
 - 이번 산출 범위: 명세·계획·근거 문서; 실행 코드·설치본 변경 없음
 
-- 후속 UI 개편 초안: [검토 화면 3단계 명세](VIEW-MODES.md)·사용자 검토 전·미구현
+- 후속 UI 개편: [검토 화면 3단계 명세](VIEW-MODES.md)·[구현·검증](VIEW-MODES-IMPLEMENTATION.md)
 
 ## 1. 제품 방향
 

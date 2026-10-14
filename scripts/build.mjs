@@ -110,7 +110,7 @@ export async function build(manifestFile,outDir,{assetRoots=[]}={}) {
     }
     entry[sideName].hash=hash(JSON.stringify(entry[sideName]));}entries.push(entry);
   }
-  let bundle={schemaVersion:1,generator:'uib-a',generatorVersion:'2.0.2',reviewId:input.reviewId||input.project.key,project:input.project,viewports:input.viewports,brand:input.brand||{},research:input.research||[],coverage:input.coverage||{},entries,elements,assets,indexHash:hash(JSON.stringify(elements))};
+  let bundle={schemaVersion:1,generator:'uib-a',generatorVersion:'2.1.0',reviewId:input.reviewId||input.project.key,project:input.project,viewports:input.viewports,brand:input.brand||{},research:input.research||[],coverage:input.coverage||{},entries,elements,assets,indexHash:hash(JSON.stringify(elements))};
   bundle.sourceBuild=sourceRevision(ROOT);
   if(!bundle.sourceBuild.sha){try{bundle.sourceBuild=(await readJSON(path.join(ROOT,'installation.json'))).sourceBuild;}catch{}}
   bundle.designContract=input.designContract?await readJSON(await safeReadPath(base,base,input.designContract)):{};

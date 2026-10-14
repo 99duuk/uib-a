@@ -15,23 +15,24 @@ export async function verify(file,out=path.join(path.dirname(file),'verification
   page.on('dialog',d=>d.accept());page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
   const record=(name,result=true)=>{check(result,name);checks.push({name,pass:true});};
   async function frame(side){return page.frames().find(f=>f.name()===side+'-frame')||await page.locator('#'+side+'-frame').elementHandle().then(e=>e.contentFrame());}
+  async function advanced(){await page.locator('#mode-advanced').click();if(!await page.locator('#inspector').isVisible())await page.locator('#toggle-inspector').click();await page.locator('#find-element').evaluate(el=>el.open=true);await page.locator('#element-details').evaluate(el=>el.open=true);await page.locator('#comparison-settings').evaluate(el=>el.open=true);}
   async function choose(entry){
-    if(await page.locator('#screen-list [data-entry='+JSON.stringify(entry.id)+']').count())await page.locator('#screen-list [data-entry='+JSON.stringify(entry.id)+']').click();
-    else for(const [key,value] of [['group',entry.group],['screen',entry.screen],['state',entry.state],['viewport',entry.viewport],['variant',entry.variant]])await page.locator('#'+key).selectOption(value);
+    if(await page.locator('#entry-picker').isVisible())await page.locator('#entry-picker').selectOption(entry.id);else check((await page.evaluate(()=>window.uibSnapshot().entry))===entry.id,'single entry selected');
     await page.waitForFunction(id=>window.uibSnapshot?.().entry===id,entry.id);
     await page.locator('#comparison').selectOption('both');
     await (await frame('after')).locator('[data-review-key="root"]').waitFor();
   }
-  async function select(id){if(!await page.locator('#inspector').isVisible())await page.locator('#toggle-inspector').click();await page.locator('#element-picker').selectOption(id);await page.waitForFunction(id=>window.uibSnapshot().selection===id,id);}
+  async function select(id){if(!await page.locator('#inspector').isVisible())await page.locator('#toggle-inspector').click();await page.locator('#find-element').evaluate(el=>el.open=true);await page.locator('#element-details').evaluate(el=>el.open=true);await page.locator('#element-picker').selectOption(id);await page.waitForFunction(id=>window.uibSnapshot().selection===id,id);}
+  async function chooseTile(id){if(await page.locator('#tile').isVisible())await page.locator('#tile').selectOption(id);else check(await page.locator('#tile').inputValue()===id,'single capture tile selected');}
   async function waitDeleted(id,value){await page.waitForFunction(({id,value})=>window.uibSnapshot().deleted.includes(id)===value,{id,value});}
   try {
-    await page.goto(pathToFileURL(isolated).href);await page.waitForFunction(()=>!!window.uibSnapshot);
+    await page.goto(pathToFileURL(isolated).href);await page.waitForFunction(()=>!!window.uibSnapshot);record('default comparison mode',await page.locator('body').getAttribute('data-ui-mode')==='compare');record('default inspector hidden',!await page.locator('#inspector').isVisible());await advanced();
     for(const entry of bundle.entries){
       await choose(entry);const f=await frame('after');
       const result=await f.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth+1,images:[...document.images].every(i=>i.complete&&i.naturalWidth>0),width:innerWidth}));
       record('entry '+entry.id+' actual viewport',result.width===bundle.viewports.find(v=>v.id===entry.viewport).width);
       record('entry '+entry.id+' no horizontal overflow',!result.overflow);record('entry '+entry.id+' images',result.images);
-      for(const tile of entry.before.tiles){await page.locator('#tile').selectOption(tile.id);await (await frame('before')).locator('img').waitFor();record('Before '+entry.id+'/'+tile.id,await (await frame('before')).locator('img').evaluate(i=>i.complete&&i.naturalWidth>0));}
+      for(const tile of entry.before.tiles){await chooseTile(tile.id);await (await frame('before')).locator('img').waitFor();record('Before '+entry.id+'/'+tile.id,await (await frame('before')).locator('img').evaluate(i=>i.complete&&i.naturalWidth>0));}
       await page.screenshot({path:path.join(out,(/^[\w.-]+$/.test(entry.id)?entry.id:hash(entry.id))+'.png')});
     }
     await choose(bundle.entries[0]);await page.locator('#comparison').selectOption('after');
@@ -48,7 +49,7 @@ export async function verify(file,out=path.join(path.dirname(file),'verification
     const row=page.locator('#deleted-list li').filter({hasText:parent.id});await row.getByRole('button',{name:'복원',exact:true}).click();await waitDeleted(parent.id,false);
     record('child deletion survives parent restore',(await page.evaluate(()=>window.uibSnapshot().deleted)).includes(child.id));
     await page.locator('#undo').click();await waitDeleted(parent.id,true);record('undo restores previous intent');
-    await page.locator('#restore').click();await waitDeleted(child.id,false);await waitDeleted(parent.id,false);
+    await page.locator('.deletion-log').evaluate(el=>el.open=true);await page.locator('#restore').click();await waitDeleted(child.id,false);await waitDeleted(parent.id,false);
     record('restore all');
     // Stable ID survives rebuilding a frame and navigating between entries.
     await select(child.id);await page.locator('#remove').click();await waitDeleted(child.id,true);
@@ -60,13 +61,13 @@ export async function verify(file,out=path.join(path.dirname(file),'verification
     const exportedPage=await context.newPage();await exportedPage.goto(pathToFileURL(exported).href);await exportedPage.waitForFunction(()=>!!window.uibSnapshot);
     record('reopen retains deletions',(await exportedPage.evaluate(()=>window.uibSnapshot().deleted)).includes(child.id));
     await exportedPage.reload();await exportedPage.waitForFunction(()=>!!window.uibSnapshot);record('refresh retains saved deletions',(await exportedPage.evaluate(()=>window.uibSnapshot().deleted)).includes(child.id));
-    await exportedPage.locator('#restore').click();await exportedPage.waitForFunction(()=>window.uibSnapshot().deleted.length===0);record('saved file can restore originals');await exportedPage.close();
-    await page.reload();await page.waitForFunction(()=>!!window.uibSnapshot);record('refresh resets temporary deletions',!(await page.evaluate(()=>window.uibSnapshot().deleted)).includes(child.id));
-    await choose(bundle.entries[0]);await select(root.id);await page.locator('#remove').click();await waitDeleted(root.id,true);record('whole screen deletion leaves controls',await page.locator('#restore').isEnabled());await page.locator('#restore').click();await waitDeleted(root.id,false);
+    record('saved review opens comparison mode',await exportedPage.locator('body').getAttribute('data-ui-mode')==='compare');await exportedPage.locator('#mode-advanced').click();await exportedPage.locator('#toggle-inspector').click();await exportedPage.locator('.deletion-log').evaluate(el=>el.open=true);await exportedPage.locator('#restore').click();await exportedPage.waitForFunction(()=>window.uibSnapshot().deleted.length===0);record('saved file can restore originals');await exportedPage.close();
+    await page.reload();await page.waitForFunction(()=>!!window.uibSnapshot);record('refresh resets temporary deletions',!(await page.evaluate(()=>window.uibSnapshot().deleted)).includes(child.id));await advanced();
+    await choose(bundle.entries[0]);await select(root.id);await page.locator('#remove').click();await waitDeleted(root.id,true);record('whole screen deletion leaves controls',await page.locator('#restore').isEnabled());await page.locator('.deletion-log').evaluate(el=>el.open=true);await page.locator('#restore').click();await waitDeleted(root.id,false);
     if(bundle.entries[0].before.tiles.length){
-      await page.locator('#comparison').selectOption('before');const tile=bundle.entries[0].before.tiles[0];await page.locator('#tile').selectOption(tile.id);
+      await page.locator('#comparison').selectOption('before');const tile=bundle.entries[0].before.tiles[0];await chooseTile(tile.id);
       const candidates=bundle.elements.filter(e=>e.entry===bundle.entries[0].id&&e.side==='before');const target=candidates.find(e=>e.tag==='h1'&&tile.rects.some(r=>r.id===e.id))||candidates[0];
-      await select(target.id);await page.locator('#remove').click();await waitDeleted(target.id,true);await (await frame('before')).locator('.uib-mask').first().waitFor();record('Before masking');await page.locator('#restore').click();await waitDeleted(target.id,false);
+      await select(target.id);await page.locator('#remove').click();await waitDeleted(target.id,true);await (await frame('before')).locator('.uib-mask').first().waitFor();record('Before masking');await page.locator('.deletion-log').evaluate(el=>el.open=true);await page.locator('#restore').click();await waitDeleted(target.id,false);
     }
     for(const width of [320,390,768,1440]){await page.setViewportSize({width,height:1000});await page.locator('#comparison').selectOption('both');record('review width '+width,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
     await page.setViewportSize({width:1440,height:1200});await page.locator('#comparison').selectOption('after');await page.locator('#zoom').selectOption('actual');
