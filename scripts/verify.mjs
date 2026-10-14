@@ -12,15 +12,17 @@ export async function verify(file,out=path.join(path.dirname(file),'verification
   const browser=await chromium.launch(),errors=[],requests=[],checks=[];
   const context=await browser.newContext({viewport:{width:1440,height:1200},acceptDownloads:true,offline:true});
   const page=await context.newPage();page.setDefaultTimeout(8000);
-  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
+  page.on('dialog',d=>d.accept());page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
   const record=(name,result=true)=>{check(result,name);checks.push({name,pass:true});};
   async function frame(side){return page.frames().find(f=>f.name()===side+'-frame')||await page.locator('#'+side+'-frame').elementHandle().then(e=>e.contentFrame());}
   async function choose(entry){
-    for(const [key,value] of [['group',entry.group],['screen',entry.screen],['state',entry.state],['viewport',entry.viewport],['variant',entry.variant]])await page.locator('#'+key).selectOption(value);
+    if(await page.locator('#screen-list [data-entry='+JSON.stringify(entry.id)+']').count())await page.locator('#screen-list [data-entry='+JSON.stringify(entry.id)+']').click();
+    else for(const [key,value] of [['group',entry.group],['screen',entry.screen],['state',entry.state],['viewport',entry.viewport],['variant',entry.variant]])await page.locator('#'+key).selectOption(value);
     await page.waitForFunction(id=>window.uibSnapshot?.().entry===id,entry.id);
+    await page.locator('#comparison').selectOption('both');
     await (await frame('after')).locator('[data-review-key="root"]').waitFor();
   }
-  async function select(id){await page.locator('#element-picker').selectOption(id);await page.waitForFunction(id=>window.uibSnapshot().selection===id,id);}
+  async function select(id){if(!await page.locator('#inspector').isVisible())await page.locator('#toggle-inspector').click();await page.locator('#element-picker').selectOption(id);await page.waitForFunction(id=>window.uibSnapshot().selection===id,id);}
   async function waitDeleted(id,value){await page.waitForFunction(({id,value})=>window.uibSnapshot().deleted.includes(id)===value,{id,value});}
   try {
     await page.goto(pathToFileURL(isolated).href);await page.waitForFunction(()=>!!window.uibSnapshot);

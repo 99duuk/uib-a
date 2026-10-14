@@ -374,3 +374,23 @@ npm run package
 - 외부 디자인·폰트·이미지: 각 저작권자 이용 조건 적용
 - 예시 브랜드: 가상 브랜드
 - OpenAI·Dribbble 공식 제품 아님
+
+## v2 검토
+
+- 요소·다중 요소·텍스트·영역·화면 의견, 답글·해결/재열기
+- 검토 초안·승인/수정 요청·삭제·미리보기 조정의 HTML 내장 저장
+- 변경 뒤 이전 승인 만료, undo/redo, 동일 bundle JSON 가져오기/충돌 선택
+- 슬라이더·투명 겹침·픽셀 차이, 원본과 현재 검토 결과의 구분
+- capture resume·로컬 resource hash 검증·실패별 진단
+- Markdown/JSON 인계·원본 PNG·trusted 재구성의 current PNG
+- v1 읽기·v2 쓰기; v1 도구의 v2 파일 미지원
+
+```bash
+node scripts/design-search.mjs --query "키보드 포커스"
+node scripts/export-review.mjs saved-review.html new-export --format md
+node scripts/export-review.mjs saved-review.html new-png --format png --view current
+node scripts/install.mjs /path/to/skills/uib-a --replace
+```
+
+- `--replace`: 새 staging 설치 성공 후 이전 폴더 backup 보존·활성 경로 전환
+- 참고 도구의 직접 재사용 범위/고지: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)

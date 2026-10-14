@@ -108,3 +108,25 @@ node <skill>/scripts/extract.mjs <saved-review.html> <work>/editable-v2
 4. 이전 ID 중 새 revision에 없는 것은 `unresolved`에 남습니다. 새 요소에 삭제를 자동 전파하지 않습니다. 사용자 의도가 여전히 유효한지 확인한 뒤 새 ID로 적용합니다.
 
 Before 타일을 추가하거나 다시 캡처한 경우에도 Before revision을 증가시킵니다. 같은 revision 안에서 자동 생성된 캡처 인덱스는 해당 캡처에만 유효합니다. 다른 캡처의 DOM 순서가 같다고 이전 ID를 재사용하지 않습니다.
+
+## v2 확장·출력
+
+- 입력: v1 호환·v2 manifest, `designContract`의 상대 JSON 경로
+- After 종류: `authored`의 file/revision 또는 `capture`의 capture/revision, `image`, `missing`
+- authored 원본 raster: 실제 빌드 시 자동 생성; 비교 조건 불일치의 명시 이유
+- 직접 import: 같은 bundle의 상태 JSON; 개정 이후 previousBundle/reviewState의 검증 rebase
+
+```bash
+node <skill>/scripts/capture.mjs <config.json> <new-output> --resume <old-output>
+node <skill>/scripts/extract.mjs <review.html> <new-output> --apply-preview-edits
+node <skill>/scripts/export-review.mjs <review.html> <new-output> --format md
+node <skill>/scripts/export-review.mjs <review.html> <new-output> --format png --view current
+```
+
+- 적용한 preview edits: 변경 After의 개정 증가·의견/판정 재검토; 기본 extract의 원본 유지
+- 캡처 resume: 설정/adapter/fixture/source/환경·PNG/지도/로컬 resource hash 일치만 재사용
+- 원본 PNG: browser 직접 저장 또는 `--format png --view original`
+- sourceHint: adapter map 또는 승인된 `data-source-*` 상대 metadata; 계정·token·개인 절대경로 제외
+- 설치/패키지: 출처 SHA·file hash 기록, 이전 설치본 보존·개발 계획/OS metadata 제외
+
+- manifest 밖 프로젝트 자산: 복사한 로컬 자산 우선 또는 trusted CLI의 `--asset-root <승인된 디렉터리>`; 입력 manifest 자체의 외부 경로 권한 확장 없음

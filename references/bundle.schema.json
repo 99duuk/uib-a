@@ -1,0 +1,163 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "generator",
+    "reviewId",
+    "bundleHash",
+    "indexHash",
+    "project",
+    "entries",
+    "elements",
+    "assets"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "generator": {
+      "const": "uib-a"
+    },
+    "reviewId": {
+      "type": "string"
+    },
+    "bundleHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "indexHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "project": {
+      "type": "object",
+      "required": [
+        "key",
+        "title"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "before",
+          "after"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object",
+            "required": [
+              "kind",
+              "revision",
+              "semanticHash",
+              "provenanceHash"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "authored",
+                  "dom",
+                  "manual",
+                  "image",
+                  "missing",
+                  "capture",
+                  "captured"
+                ]
+              },
+              "revision": {
+                "type": "string"
+              },
+              "semanticHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "provenanceHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "html": {
+                "type": "string"
+              },
+              "tiles": {
+                "type": "array",
+                "items": {}
+              }
+            }
+          },
+          "after": {
+            "type": "object",
+            "required": [
+              "kind",
+              "revision",
+              "semanticHash",
+              "provenanceHash"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "authored",
+                  "dom",
+                  "manual",
+                  "image",
+                  "missing",
+                  "capture",
+                  "captured"
+                ]
+              },
+              "revision": {
+                "type": "string"
+              },
+              "semanticHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "provenanceHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "html": {
+                "type": "string"
+              },
+              "tiles": {
+                "type": "array",
+                "items": {}
+              }
+            }
+          }
+        }
+      },
+      "minItems": 1,
+      "maxItems": 500
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "maxItems": 50000
+    },
+    "assets": {
+      "type": "object"
+    },
+    "designContract": {
+      "type": "object"
+    },
+    "designAudit": {
+      "type": "object"
+    }
+  }
+}

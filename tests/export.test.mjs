@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {exportReview} from '../scripts/export-review.mjs';
+import {loadReview} from '../scripts/lib.mjs';
+import {build,renderReview} from '../scripts/build.mjs';
+import {handoffFor,handoffMarkdown} from '../scripts/handoff.mjs';
+test('handoff retains contexts and excludes unsubmitted drafts',()=>{const b={reviewId:'r',project:{},elements:[{id:'id',key:'k',entry:'e',side:'after',revision:'1',sourceHint:{file:'View.vue'}}],entries:[{id:'e',state:'normal',viewport:'m',before:{revision:'1'},after:{revision:'2'}}]};const s={annotations:[{target:{elementId:'id'},text:'hello'}],drafts:[{text:'secret draft'}]};const p=handoffFor(b,s);assert.equal(p.annotations[0].context[0].sourceHint.file,'View.vue');assert.equal(JSON.stringify(p).includes('secret draft'),false);assert.ok(handoffMarkdown(p).includes('hello'));});
+test('PNG uses trusted reconstructed shell, renders deleted reflow and patches, exact viewport',async()=>{const tmp=await fs.mkdtemp(path.join(os.tmpdir(),'uib-export-'));try{
+  await fs.writeFile(path.join(tmp,'after.html'),'<html><head><style>body{margin:0}div{height:50px;background:#99ccff}</style></head><body><div data-review-key=title>Hello</div><div data-review-key=other>World</div></body></html>');await fs.writeFile(path.join(tmp,'manifest.json'),JSON.stringify({schemaVersion:2,project:{key:'export-test',title:'Export'},viewports:[{id:'m',width:390,height:844}],entries:[{id:'home',screen:'home',state:'normal',viewport:'m',title:'Home',after:{kind:'authored',revision:'1',file:'after.html'}}]}));await build(path.join(tmp,'manifest.json'),path.join(tmp,'build'));const original=await loadReview(path.join(tmp,'build/before-after.html'));const saved=path.join(tmp,'safe.html');await fs.writeFile(saved,await renderReview(original.bundle,original.state));
+  const malicious=path.join(tmp,'malicious.html');await fs.writeFile(malicious,(await fs.readFile(saved,'utf8'))+'<script>document.body.innerHTML="ATTACKER SHELL";throw Error("external shell executed")</script>');
+  await exportReview(saved,path.join(tmp,'one'),{format:'png'});await exportReview(malicious,path.join(tmp,'two'),{format:'png'});
+  const e=original.bundle.entries[0],v=original.bundle.viewports.find(v=>v.id===e.viewport),file=e.id+'-after-current.png';const a=await fs.readFile(path.join(tmp,'one',file)),b=await fs.readFile(path.join(tmp,'two',file));assert.deepEqual(a,b);assert.equal(a.readUInt32BE(16),v.width);assert.equal(a.readUInt32BE(20),v.height);
+  const leaf=original.bundle.elements.find(n=>n.entry===e.id&&n.side==='after'&&n.textEditable);assert.ok(leaf);original.state.previewEdits=[{id:'patch-1',entry:e.id,elementId:leaf.id,kind:'text',value:'PATCHED CONTENT',baseHash:e.after.semanticHash}];original.state.deleted=[];
+  await fs.writeFile(path.join(tmp,'patched.html'),await renderReview(original.bundle,original.state));await exportReview(path.join(tmp,'patched.html'),path.join(tmp,'three'),{format:'png'});const patched=await fs.readFile(path.join(tmp,'three',file));assert.notDeepEqual(a,patched);original.state.deleted=[leaf.id];await fs.writeFile(path.join(tmp,'deleted.html'),await renderReview(original.bundle,original.state));await exportReview(path.join(tmp,'deleted.html'),path.join(tmp,'four'),{format:'png'});assert.notDeepEqual(patched,await fs.readFile(path.join(tmp,'four',file)));
+  await exportReview(saved,path.join(tmp,'original'),{format:'png',view:'original'});const raster=await fs.readFile(path.join(tmp,'original','home-after-top.png'));assert.equal(raster.readUInt32BE(16),v.width);assert.equal(raster.readUInt32BE(20),v.height);
+  await assert.rejects(exportReview(saved,path.join(tmp,'one'),{format:'json'}),/exists/);
+}finally{await fs.rm(tmp,{recursive:true,force:true});}});

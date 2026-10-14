@@ -1,0 +1,303 @@
+[
+  {
+    "id": "ux-9",
+    "domain": "animation",
+    "title": "Reduced Motion",
+    "description": "Respect user's motion preferences",
+    "recommendation": "Check prefers-reduced-motion media query",
+    "avoid": "Ignore accessibility motion settings",
+    "severity": "High",
+    "platform": "All",
+    "tags": [
+      "움직임",
+      "모션",
+      "애니메이션",
+      "줄이기",
+      "접근성"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "9",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-11",
+    "domain": "animation",
+    "title": "Hover vs Tap",
+    "description": "Hover effects don't work on touch devices",
+    "recommendation": "Use click/tap for primary interactions",
+    "avoid": "Rely only on hover for important actions",
+    "severity": "High",
+    "platform": "All",
+    "tags": [
+      "터치",
+      "탭",
+      "호버",
+      "모바일"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "11",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-16",
+    "domain": "layout",
+    "title": "Overflow Hidden",
+    "description": "Hidden overflow can clip important content",
+    "recommendation": "Test all content fits within containers",
+    "avoid": "Blindly apply overflow-hidden",
+    "severity": "Medium",
+    "platform": "Web",
+    "tags": [
+      "넘침",
+      "스크롤",
+      "잘림",
+      "내용"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "16",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-19",
+    "domain": "layout",
+    "title": "Content Jumping",
+    "description": "Images badges validation text and skeleton replacements can shift nearby content when they update",
+    "recommendation": "Reserve appropriate space or keep async states in a stable content-driven container",
+    "avoid": "Insert compact text or media without a layout strategy",
+    "severity": "High",
+    "platform": "Web",
+    "tags": [
+      "레이아웃",
+      "이미지",
+      "흔들림",
+      "로딩",
+      "자리"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "19",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-22",
+    "domain": "touch",
+    "title": "Touch Target Size",
+    "description": "Touch target guidance depends on platform and web context",
+    "recommendation": "Use 44pt on iOS and 48dp on Android; for web use the separate WCAG Target Size rule",
+    "avoid": "Treat one unit or minimum as universal across platforms",
+    "severity": "High",
+    "platform": "Mobile",
+    "tags": [
+      "터치",
+      "목표",
+      "크기",
+      "모바일"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "22",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-23",
+    "domain": "touch",
+    "title": "Touch Spacing",
+    "description": "Adjacent touch targets need adequate spacing",
+    "recommendation": "Minimum 8px gap between touch targets",
+    "avoid": "Tightly packed clickable elements",
+    "severity": "Medium",
+    "platform": "Mobile",
+    "tags": [
+      "터치",
+      "간격",
+      "버튼",
+      "모바일"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "23",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-28",
+    "domain": "interaction",
+    "title": "Focus States",
+    "description": "Keyboard focus, including controls inside a modal, needs a visible indicator",
+    "recommendation": "Use a visible focus ring on every interactive control, including modal controls",
+    "avoid": "Remove focus outline without replacement",
+    "severity": "High",
+    "platform": "All",
+    "tags": [
+      "키보드",
+      "포커스",
+      "초점",
+      "접근성"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "28",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-31",
+    "domain": "interaction",
+    "title": "Disabled States",
+    "description": "Clearly indicate non-interactive elements",
+    "recommendation": "Reduce opacity and change cursor",
+    "avoid": "Confuse disabled with normal state",
+    "severity": "Medium",
+    "platform": "All",
+    "tags": [
+      "비활성",
+      "버튼",
+      "상태"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "31",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-32",
+    "domain": "interaction",
+    "title": "Loading Buttons",
+    "description": "Prevent double submission during async actions",
+    "recommendation": "Disable button and show loading state",
+    "avoid": "Allow multiple clicks during processing",
+    "severity": "High",
+    "platform": "All",
+    "tags": [
+      "로딩",
+      "버튼",
+      "중복",
+      "제출"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "32",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-33",
+    "domain": "interaction",
+    "title": "Error Feedback",
+    "description": "Users need to know when something fails",
+    "recommendation": "Show clear error messages near problem",
+    "avoid": "Silent failures with no feedback",
+    "severity": "High",
+    "platform": "All",
+    "tags": [
+      "오류",
+      "실패",
+      "피드백",
+      "메시지"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "33",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-34",
+    "domain": "interaction",
+    "title": "Success Feedback",
+    "description": "Confirm successful actions to users",
+    "recommendation": "Show success message or visual change",
+    "avoid": "No confirmation of completed action",
+    "severity": "Medium",
+    "platform": "All",
+    "tags": [
+      "성공",
+      "확인",
+      "저장",
+      "피드백"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "34",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  },
+  {
+    "id": "ux-35",
+    "domain": "interaction",
+    "title": "Confirmation Dialogs",
+    "description": "Prevent accidental destructive actions",
+    "recommendation": "Confirm before delete/irreversible actions",
+    "avoid": "Delete without confirmation",
+    "severity": "High",
+    "platform": "All",
+    "tags": [
+      "삭제",
+      "복원",
+      "확인",
+      "위험"
+    ],
+    "source": {
+      "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sha": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "recordId": "35",
+      "license": "MIT",
+      "reviewedAt": "2026-10-13"
+    },
+    "limits": "Contextual guidance; original dataset recommendation, not independent outcome evidence. Existing product requirements and platform rules take priority."
+  }
+]

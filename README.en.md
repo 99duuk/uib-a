@@ -143,3 +143,18 @@ Initial verification covered 41 review checks plus 20 input/data checks on macOS
 [Open an issue](https://github.com/99duuk/uib-a/issues) with your browser, OS, reproduction steps, and expected behavior. Share only minimal, anonymized examples. Pull requests should explain the change and the behavior checked.
 
 [MIT License](LICENSE) · Copyright © 2026 99duuk. Dependencies and third-party design assets retain their respective licenses. Community project; not an official OpenAI or Dribbble product.
+
+## Version 2
+
+Annotations support elements, groups, text, areas and screens, with replies and drafts. Decisions become stale when content, edits or critical issues change. A saved HTML carries original assets and all review state without localStorage. Imports preview conflicts, while a validated previous bundle supports revision continuation.
+
+Capture can resume into a new run only when source/config/resource and artifact hashes match. Raster comparisons offer wipe, overlay and pixel diff with explicit compatibility gates. Browser exports use embedded raster assets; current DOM PNG export reconstructs a trusted shell from validated data before offline Playwright capture.
+
+```bash
+node scripts/design-search.mjs --query "keyboard focus"
+node scripts/export-review.mjs saved-review.html new-export --format md
+node scripts/export-review.mjs saved-review.html new-png --format png --view current
+node scripts/install.mjs /path/to/skills/uib-a --replace
+```
+
+The installer stages and verifies dependencies before switching the active directory, preserving the previous copy as a backup. Version 1 files remain readable; old tools cannot read version 2 files. See THIRD_PARTY_NOTICES.md for the curated MIT data and ISC pixelmatch notices.

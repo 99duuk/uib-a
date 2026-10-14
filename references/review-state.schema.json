@@ -1,0 +1,368 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "reviewId",
+    "bundleHash",
+    "indexHash",
+    "annotations",
+    "drafts",
+    "decisions",
+    "previewEdits",
+    "deleted",
+    "unresolved"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "reviewId": {
+      "type": "string"
+    },
+    "bundleHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "indexHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "annotations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "target",
+          "text",
+          "priority",
+          "status",
+          "replies"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "target": {
+            "type": "object",
+            "required": [
+              "entry",
+              "side",
+              "revision",
+              "kind"
+            ],
+            "properties": {
+              "entry": {
+                "type": "string"
+              },
+              "side": {
+                "enum": [
+                  "before",
+                  "after"
+                ]
+              },
+              "revision": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "element",
+                  "elements",
+                  "text",
+                  "region",
+                  "screen"
+                ]
+              },
+              "elementId": {
+                "type": "string"
+              },
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "coordinateSpace": {
+                "enum": [
+                  "tile-local",
+                  "viewport-local"
+                ]
+              },
+              "rect": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "items": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "width": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "height": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "tileHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "visibleStateHashAtCreation": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "quote": {
+                "type": "string"
+              }
+            }
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 10000
+          },
+          "priority": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "status": {
+            "enum": [
+              "open",
+              "resolved"
+            ]
+          },
+          "replies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "text"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "drafts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "target",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "target": {
+            "type": "object",
+            "required": [
+              "entry",
+              "side",
+              "revision",
+              "kind"
+            ],
+            "properties": {
+              "entry": {
+                "type": "string"
+              },
+              "side": {
+                "enum": [
+                  "before",
+                  "after"
+                ]
+              },
+              "revision": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "element",
+                  "elements",
+                  "text",
+                  "region",
+                  "screen"
+                ]
+              },
+              "elementId": {
+                "type": "string"
+              },
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "coordinateSpace": {
+                "enum": [
+                  "tile-local",
+                  "viewport-local"
+                ]
+              },
+              "rect": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "items": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "width": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "height": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "tileHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "visibleStateHashAtCreation": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "quote": {
+                "type": "string"
+              }
+            }
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "entry",
+          "status",
+          "visibleStateHash",
+          "criticalIssuesHash"
+        ],
+        "properties": {
+          "entry": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "unreviewed",
+              "approved",
+              "changes-requested",
+              "deferred"
+            ]
+          },
+          "visibleStateHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "criticalIssuesHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "previewEdits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "baseHash",
+          "value"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "text",
+              "token",
+              "style",
+              "asset",
+              "structure"
+            ]
+          },
+          "baseHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "textNodeIndex": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "property": {
+            "enum": [
+              "color",
+              "fontSize",
+              "fontFamily",
+              "fontWeight",
+              "margin",
+              "padding",
+              "gap",
+              "textAlign",
+              "justifyContent",
+              "alignItems"
+            ]
+          },
+          "value": {}
+        }
+      }
+    },
+    "deleted": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {}
+    }
+  }
+}

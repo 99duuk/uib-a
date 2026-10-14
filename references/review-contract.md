@@ -1,36 +1,45 @@
-# 검토 화면의 동작 계약
+# 검토 계약 v2
 
-## 선택·표시
+- core: `scripts/review-state.mjs`의 Node/browser 동일 계약
+- 읽기: v1·v2, 쓰기: v2; 알 수 없는 버전·다른 검토/인덱스의 거절
+- 정체성: `UIR/project/entry/side/revision/key`; 의미 키·side 개정·원본 보존
+- Before: 실제 캡처 또는 명시 image/manual/missing; 캡처 영역 선택과 DOM 재배치의 구분
+- After: 작성 HTML 또는 capture/image/missing; 작성형만 텍스트/토큰/style 조정
 
-검토 UI와 서비스 시안은 별도 프레임입니다. 화면 그룹/화면/상태/viewport/variant가 실제 엔트리를 선택합니다. 프레임 너비는 지정 viewport를 유지하고, 맞춤은 그 프레임 전체를 축소합니다. `100%`는 원래 CSS px 크기를 표시합니다. 창 너비만 줄여 PC 엔트리를 모바일이라고 부르지 않습니다.
+## 검토·조정
 
-선택 모드가 기본입니다. 클릭·터치·키보드 Enter/Space 또는 요소 목록으로 선택하며 목록은 선택하기 어려운 요소의 대체 경로입니다. 상위 요소 버튼으로 컨테이너까지 올라갑니다. disabled 컨트롤도 요소 목록으로 선택합니다. 스크롤 조작은 선택하지 않습니다. 호버 표시와 선택 표시는 스크롤 컨테이너의 보이는 영역에 맞춰 잘립니다.
+- 기본 요소 선택·명시 복사; 선택만으로 clipboard 변경 없음
+- 모드: 요소·다중·영역 의견·영역 요소·텍스트·이동·로컬 체험 중 한 가지
+- 다중 선택: 동일 entry/side/revision; 부모/자식 삭제 의도의 독립 보존
+- 의견: 요소·집합·텍스트·영역·화면 target, P0~P3, open/resolved, 답글·편집·재열기
+- 초안: 원래 target와 text의 화면별 보존·파일 저장·미제출 표시; 인계/승인 의견 제외
+- 삭제: Before 영역 마스킹·작성 After 숨김/재배치, 캡처 After 마스킹
+- 복원: 개별/전체·부모/자식 의도 유지·루트 삭제 뒤 외부 제어 접근
+- undo/redo: 사용자 변경 단위, 새 변경의 redo 초기화, 입력창/IME의 표준 동작 유지
+- patch: 원본 semanticHash·정확한 element/entry 연결, leaf/명시 text node·허용 style·내장 image·계약 토큰
+- 토큰 patch: 계약의 `--name` CSS 변수와 안전한 CSS 값; 임의 CSS/script/외부 URL 제외
+- 구조 변경: 실제 DOM 파괴 대신 구조화 요청 의도
+- 영역: CSS px·타일 hash 또는 화면 상태 hash·실제 scroll; 불일치 영역의 미해결/재지정
 
-복사에는 프로젝트·entry·화면·side·revision·key·고유 ID·태그·라벨·locator가 포함됩니다. Clipboard API가 허용되지 않으면 선택 텍스트 영역에서 수동 복사할 수 있습니다. 원본 문자열은 JSON/textContent로 다뤄 사용자 문구가 실행 코드가 되지 않도록 합니다.
+## 판정·저장·가져오기
 
-체험 모드는 `data-review-entry`로 연결한 명명된 화면 전이와 로컬 details/입력을 제공합니다. 원본 앱 스크립트·외부 네비게이션·폼 제출은 실행하지 않습니다. 선택 모드에서 요소를 지우는 동작은 제품 기능 삭제를 승인하는 의미가 아닙니다.
+- 판정: unreviewed/approved/changes-requested/deferred; 현재 화면/시안에 한정
+- 승인 유효성: 원본 의미 hash·삭제/최종 patch·주요 의견의 개정/상태 일치
+- 새 P0/P1·재열기·삭제·patch·개정 변경: needs-review 표시
+- 주요 의견 보류: 해당 issue 개정별 이유와 검토자 입력; 인증된 전자서명 의미 없음
+- 저장: 원본 bundle/assets·의견/답글·초안·판정·삭제·patch·미해결의 새 HTML
+- 원본 파일 덮어쓰기 없음·localStorage 필수 의존 없음·파일 이동/새 브라우저/refresh의 상태 유지
+- 저장 알림: 파일 생성/다운로드 요청; 디스크 저장 완료의 자동 보장 없음
+- import: 같은 bundle의 항목별 차이·추가/삭제 충돌 미리보기, 사용자 선택 후 적용
+- 개정 후: 검증된 previousBundle+state의 명시 rebase; 무변경 대상 유지·변경 대상 unresolved
+- 세션 이력: 현재 undo/redo, 저장본 재열기의 최종 상태와 원본 복원; 이전 세션 undo 이력 비보장
 
-## ID와 삭제
+## 출력·신뢰 경계
 
-ID는 `UIR/project/entry/side/revision/key` 각 부분을 URL 인코딩한 값입니다. 단순 하이픈 split이나 DOM 순서로 파싱하지 않습니다. `element-index.json`과 HTML 내 index가 동일한 원본이며 indexHash로 연결됩니다. 프레임을 다시 열어도 원래 엔트리의 ID는 유지됩니다.
-
-- After: 해당 DOM을 숨겨 주변 요소가 재배치됩니다.
-- Before: 캡처의 선택 영역을 마스킹합니다. 사진에서 요소를 제거한 실제 레이아웃을 계산하지는 않습니다.
-- 화면 전체 root도 지울 수 있고 외부 복원 도구는 남습니다.
-- 부모와 자식 삭제는 별도 의도로 저장됩니다. 자식을 지운 뒤 부모를 지우고 부모만 복원해도 자식 삭제는 유지됩니다.
-- 개별 복원, 마지막 상태로 되돌리기, 모든 삭제 복원을 지원합니다.
-- 삭제 범위는 해당 entry/side/revision입니다. 다른 뷰포트나 시안으로 자동 전파하지 않습니다.
-
-## 저장
-
-현재 삭제 목록은 정규화한 데이터와 별도로 관리합니다. 저장 시 브라우저의 변형된 화면을 그대로 복사하지 않고 원래 검토 엔진+bundle에 현재 상태를 넣어 새 HTML을 다운로드합니다. 원본 After DOM과 Before 이미지가 남으므로 저장본에서도 복원할 수 있습니다.
-
-저장 전 새로고침하면 임시 삭제는 초기화됩니다. 저장본에서 새로고침하면 **저장한 시점의 삭제 상태**로 돌아갑니다. 브라우저 localStorage에 의존하지 않습니다. 다운로드 버튼은 다운로드 요청을 알리며 실제 파일 저장 완료를 임의로 주장하지 않습니다.
-
-현재 인덱스에 없는 저장 ID는 미해결로 표시합니다. 다른 엔트리나 새 revision에 추측 적용하지 않습니다. 미해결 목록도 다음 저장본에 유지되어 검토 이력을 잃지 않습니다. 삭제 목록 복사는 이 정보를 다음 수정 요청에 전달하는 용도입니다.
-
-## 파일과 실행
-
-공통 검토 화면은 브랜드 중립이며 서비스 색상·글꼴은 After 안에 적용합니다. iframe은 allow-scripts만 허용하고 동일 출처 권한은 주지 않습니다. 삽입 스크립트는 검토 엔진만 사용하며 CSP로 네트워크와 폼 전송을 제한합니다. 입력 HTML의 앱 스크립트와 이벤트 속성은 빌드 시 제거합니다.
-
-HTML은 브라우저에서 바로 여는 파일이며 최초 생성에만 Node/Playwright가 필요합니다. PNG가 많은 시안은 파일이 커질 수 있으므로 타일·뷰포트 범위를 목적에 맞게 선택합니다. 선택과 삭제는 디자인 검토 기능이며 전문 이미지 편집기나 실제 앱 실행 환경을 대체하지 않습니다.
+- browser: 검토 JSON·Markdown/JSON 인계·내장 raster/영역/의견 포함 PNG
+- current DOM PNG: 저장 HTML의 JSON 비실행 파싱→검증→trusted shell 재생성→오프라인 Playwright
+- frame: allow-scripts만, 원본 앱 script/외부 연결/form 제출 금지
+- message: frame source·token·entry/side·ID/enum/좌표/payload 크기 확인
+- 자산 경로: 승인 root의 realpath 포함 여부; 정상 source/../assets 허용·외부 symlink/root 탈출 거절
+- 외부 입력 문자열: textContent·안전한 JSON embedding; HTML 의견 실행 없음
+- 소스 맥락: 수집 가능한 상대 파일/행/컴포넌트만, 없으면 null; React/Vue 개발 adapter 선택 사항

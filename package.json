@@ -1,12 +1,33 @@
 {
   "name": "uib-a",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "private": true,
   "license": "MIT",
-  "repository": {"type": "git", "url": "https://github.com/99duuk/uib-a.git"},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/99duuk/uib-a.git"
+  },
   "homepage": "https://github.com/99duuk/uib-a#readme",
-  "bugs": {"url": "https://github.com/99duuk/uib-a/issues"},
-  "files": ["SKILL.md", "README.md", "README.en.md", "LICENSE", "docs", "agents", "references", "scripts", "assets", "examples", "package-lock.json"],
+  "bugs": {
+    "url": "https://github.com/99duuk/uib-a/issues"
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "docs",
+    "agents",
+    "references",
+    "scripts",
+    "assets",
+    "examples",
+    "package-lock.json",
+    "data",
+    "licenses",
+    "THIRD_PARTY_NOTICES.md",
+    "tests"
+  ],
   "type": "module",
   "description": "Portable UI before/after review skill and offline HTML reviewer",
   "engines": {
@@ -16,11 +37,13 @@
     "demo": "node scripts/demo.mjs",
     "verify:demo": "node scripts/verify.mjs output/demo/before-after.html",
     "install:skill": "node scripts/install.mjs",
-    "package": "node scripts/package.mjs"
+    "package": "node scripts/package.mjs",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "ajv": "8.20.0",
     "linkedom": "0.18.13",
+    "pixelmatch": "7.2.0",
     "playwright": "1.63.0"
   }
 }

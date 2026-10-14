@@ -34,3 +34,11 @@
 - PDF/PNG 일괄 내보내기·실서비스 쓰기·GitHub 자동 게시·분석 도구 계측은 이 버전의 기능이 아닙니다.
 
 검증 결과는 각 산출물의 보고서가 근거입니다. 이 문서의 기능 목록을 모든 프로젝트에서 이미 검증된 결과로 인용하지 않습니다.
+
+## v2 확인 범위
+
+- Node tests: 상태 hash/이행/판정·import 충돌/삭제·필수 정보·자료 검색·캡처 resume·diff·trusted PNG·패키지 포함 경계
+- browser: 명시 복사·초안 전환/저장·의견/답글·승인 만료·undo/redo·영역 미해결·leaf patch·모바일 panel
+- 기존 verifier: 실제 viewport/이미지·선택/삭제·부모자식 복원·저장/refresh·Before mask·루트 복원·외부 HTTP 차단
+- 실행한 engine·OS·fixture·package/source hash만 완료 근거로 사용
+- screen reader와 실제 touch hardware: 직접 수행 여부의 별도 기록; DOM 속성 검사로 실기기 시험 완료 주장 금지

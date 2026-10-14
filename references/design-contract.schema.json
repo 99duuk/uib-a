@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        1,
+        2
+      ]
+    },
+    "productBrief": {
+      "type": "object"
+    },
+    "requiredContent": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "evidence",
+          "appliesTo"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "evidence": {},
+          "appliesTo": {
+            "type": "object"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "entry",
+                "status"
+              ],
+              "properties": {
+                "entry": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "present",
+                    "missing",
+                    "unverified"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "object"
+    },
+    "sourceEvidence": {
+      "type": "array",
+      "items": {}
+    },
+    "variants": {
+      "type": "array",
+      "items": {}
+    },
+    "critiques": {
+      "type": "array",
+      "items": {}
+    },
+    "flows": {
+      "type": "array",
+      "items": {}
+    }
+  }
+}
