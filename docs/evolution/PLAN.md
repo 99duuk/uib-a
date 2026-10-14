@@ -1,6 +1,6 @@
 # uib-a 구현 계획
 
-- 상태: 계획 완료 대상·기능 구현 미착수
+- 상태: v2 구현·자동 검증 완료; 실기기 검증 한계의 [구현 현황](IMPLEMENTATION.md) 기록
 - 기준: `de59afcfa3b1e357ab978c3dc55f2ed08dc2dbf5` · 2026-10-13
 - 작성 브랜치: `docs/evolution-plan`
 - 계약: [SPEC.md](SPEC.md) F01~F18 · 근거: [COMPARISON.md](COMPARISON.md) · [비판 검토·개선](REVIEW.md)
@@ -281,4 +281,4 @@ flowchart LR
 - 설치 오류: 이전 활성본 유지 또는 백업 복구·실패 패키지 출처 기록
 - 반복 비평: 새 근거/개선 없는 반복의 중단과 잔존 이슈 기록; 미완료 요구의 성공 보고 금지
 - 운영 영향: Bottling Worker·D1·Kakao·NFC·운영 배포 변경 없음
-- 이번 문서 작업 종료: 비교·명세·계획의 출처/요구 추적 검토, 문서 commit/push, 구현 미착수 표기
+- 구현 작업 현황: [IMPLEMENTATION.md](IMPLEMENTATION.md)의 요구별 코드·검증·실기기 한계 기록

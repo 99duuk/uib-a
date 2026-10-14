@@ -1,6 +1,6 @@
 # uib-a 확장 명세
 
-- 문서 상태: 제안 명세·미구현
+- 문서 상태: v2 구현 기준; 실제 확인 범위와 한계의 [구현 현황](IMPLEMENTATION.md) 기록
 - 작성 일자: 2026-10-13
 - 기준 소스: `de59afcfa3b1e357ab978c3dc55f2ed08dc2dbf5` · 패키지 `1.1.1`
 - 작성 브랜치: `docs/evolution-plan`
